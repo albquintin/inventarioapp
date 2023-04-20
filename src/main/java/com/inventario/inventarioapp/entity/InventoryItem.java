@@ -19,7 +19,7 @@ public class InventoryItem {
     @Column(name = "position", nullable = false)
     private String position;
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private Double price;
     @Column(name = "times_rented")
     private Integer timesRented;
     @Column(name = "color")
@@ -34,4 +34,6 @@ public class InventoryItem {
     @ManyToOne
     @JoinColumn(name = "subtype_id")
     private Subtype subtype;
+    @Column(name = "picture")
+    private String picture;
 }
