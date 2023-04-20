@@ -10,4 +10,6 @@ public interface TypeService {
     List<TypeDto> findAllTypes();
 
     void createType(TypeDto typeDto);
+
+    TypeDto findById(Long typeId);
 }

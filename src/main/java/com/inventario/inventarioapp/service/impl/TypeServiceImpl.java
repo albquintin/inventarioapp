@@ -8,6 +8,7 @@ import com.inventario.inventarioapp.service.TypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,5 +31,12 @@ public class TypeServiceImpl implements TypeService {
     public void createType(TypeDto typeDto) {
         Type type = TypeMapper.mapToType(typeDto);
         typeRepository.save(type);
+    }
+
+    @Override
+    public TypeDto findById(Long typeId) {
+        Optional<Type> type = typeRepository.findById(typeId);
+        TypeDto typeDto = TypeMapper.mapToTypeDto(type.get());
+        return typeDto;
     }
 }

@@ -16,7 +16,13 @@ public class Subtype {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
+
+    public Subtype(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
 }
