@@ -40,4 +40,23 @@ public class InventoryItemServiceImpl implements InventoryItemService {
         InventoryItem inventoryItem = InventoryItemMapper.mapToInventoryItem(inventoryItemDto, type.get(), subtype.get());
         inventoryItemRepository.save(inventoryItem);
     }
+
+    @Override
+    public void updateInventoryItem(InventoryItemDto inventoryItemDto) {
+        Optional<Type> type = typeRepository.findById(inventoryItemDto.getTypeId());
+        Optional<Subtype> subtype = subtypeRepository.findById(inventoryItemDto.getSubtypeId());
+        InventoryItem inventoryItem = InventoryItemMapper.mapToInventoryItem(inventoryItemDto, type.get(), subtype.get());
+        inventoryItemRepository.save(inventoryItem);
+    }
+
+    @Override
+    public InventoryItemDto findInventoryItemById(Long inventoryItemId) {
+        InventoryItem inventoryItem = inventoryItemRepository.findById(inventoryItemId).get();
+        return InventoryItemMapper.mapToInventoryItemDto(inventoryItem);
+    }
+
+    @Override
+    public void deleteInventoryItem(Long inventoryItemId) {
+        inventoryItemRepository.deleteById(inventoryItemId);
+    }
 }

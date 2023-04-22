@@ -74,5 +74,34 @@ public class InventoryItemController {
         inventoryItemService.createInventoryItem(inventoryItemDto);
         return "redirect:/types/inventory_items";
     }
+    @GetMapping("types/inventory_items/{inventoryItemId}/edit")
+    public String editInventoryItemForm(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
+        InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
+        model.addAttribute("inventoryItem", inventoryItemDto);
+        List<TypeDto> listTypes = typeService.findAllTypes();
+        model.addAttribute("listTypes", listTypes);
+        List<SubtypeDto> listSubtypes = subtypeService.findAllSubtypes();
+        model.addAttribute("listSubtypes", listSubtypes);
+        return "types/edit_inventory_item";
+    }
 
+    @PostMapping("types/inventory_items/{inventoryItemId}")
+    public String updateInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId,
+                                      @Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItem,
+                                      BindingResult result, Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute("inventoryItem", inventoryItem);
+            return "types/edit_inventory_item";
+        }
+
+        inventoryItem.setId(inventoryItemId);
+        inventoryItemService.updateInventoryItem(inventoryItem);
+        return "redirect:/types/inventory_items";
+    }
+    @GetMapping("types/inventory_items/{inventoryItemId}/delete")
+    public String deleteInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId){
+        inventoryItemService.deleteInventoryItem(inventoryItemId);
+        return "redirect:/types/inventory_items";
+    }
 }

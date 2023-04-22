@@ -10,5 +10,11 @@ public interface InventoryItemService {
 
     void createInventoryItem(InventoryItemDto inventoryItemDto);
 
+    void updateInventoryItem(InventoryItemDto inventoryItemDto);
+
+    InventoryItemDto findInventoryItemById(Long inventoryItemId);
+
+    void deleteInventoryItem(Long inventoryItemId);
+
 
 }
