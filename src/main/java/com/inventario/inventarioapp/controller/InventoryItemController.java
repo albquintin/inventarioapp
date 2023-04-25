@@ -32,14 +32,14 @@ public class InventoryItemController {
         this.typeService = typeService;
     }
 
-    @GetMapping("/types/inventory_items")
+    @GetMapping("/items/inventory_items")
     public String inventoryItems(Model model){
         List<InventoryItemDto> inventoryItems = inventoryItemService.findAllInventoryItems();
         model.addAttribute("inventoryItems", inventoryItems);
-        return "/types/inventory_items";
+        return "/items/inventory_items";
     }
 
-    @GetMapping("/types/inventory_items/newinventoryitem")
+    @GetMapping("/items/inventory_items/newinventoryitem")
     public String newInventoryItemForm(Model model){
         InventoryItemDto inventoryItemDto = new InventoryItemDto();
         model.addAttribute("inventoryItem", inventoryItemDto);
@@ -47,16 +47,16 @@ public class InventoryItemController {
         model.addAttribute("listTypes", listTypes);
         List<SubtypeDto> listSubtypes = subtypeService.findAllSubtypes();
         model.addAttribute("listSubtypes", listSubtypes);
-        return "/types/create_inventory_item";
+        return "/items/create_inventory_item";
     }
-    @PostMapping("types/inventory_items")
+    @PostMapping("items/inventory_items")
     public String createInventoryItem(@Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItemDto,
                                       BindingResult result, Model model,
                                       @RequestParam("file") MultipartFile picture){
 
         if(result.hasErrors()){
             model.addAttribute("inventoryItem", inventoryItemDto);
-            return "types/create_inventory_item";
+            return "items/create_inventory_item";
         }
         if(!picture.isEmpty()){
             Path imagesDirectory = Paths.get("src//main//resources//static/images");
@@ -72,9 +72,9 @@ public class InventoryItemController {
             }
         }
         inventoryItemService.createInventoryItem(inventoryItemDto);
-        return "redirect:/types/inventory_items";
+        return "redirect:/items/inventory_items";
     }
-    @GetMapping("types/inventory_items/{inventoryItemId}/edit")
+    @GetMapping("items/inventory_items/edit/{inventoryItemId}")
     public String editInventoryItemForm(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
         InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
         model.addAttribute("inventoryItem", inventoryItemDto);
@@ -82,26 +82,33 @@ public class InventoryItemController {
         model.addAttribute("listTypes", listTypes);
         List<SubtypeDto> listSubtypes = subtypeService.findAllSubtypes();
         model.addAttribute("listSubtypes", listSubtypes);
-        return "types/edit_inventory_item";
+        return "items/edit_inventory_item";
     }
 
-    @PostMapping("types/inventory_items/{inventoryItemId}")
+    @PostMapping("items/inventory_items/{inventoryItemId}")
     public String updateInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId,
                                       @Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItem,
                                       BindingResult result, Model model){
 
         if(result.hasErrors()){
             model.addAttribute("inventoryItem", inventoryItem);
-            return "types/edit_inventory_item";
+            return "items/edit_inventory_item";
         }
 
         inventoryItem.setId(inventoryItemId);
         inventoryItemService.updateInventoryItem(inventoryItem);
-        return "redirect:/types/inventory_items";
+        return "redirect:/items/inventory_items";
     }
-    @GetMapping("types/inventory_items/{inventoryItemId}/delete")
+    @GetMapping("items/inventory_items/delete/{inventoryItemId}")
     public String deleteInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId){
         inventoryItemService.deleteInventoryItem(inventoryItemId);
-        return "redirect:/types/inventory_items";
+        return "redirect:/items/inventory_items";
+    }
+
+    @GetMapping("/items/inventory_items/view/{inventoryItemId}")
+    public String viewInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
+        InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
+        model.addAttribute("inventoryItem", inventoryItemDto);
+        return "items/view_inventory_item";
     }
 }

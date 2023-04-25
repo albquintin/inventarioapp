@@ -2,11 +2,41 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="types/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <body>
-<div th:replace="types/header :: navbar"></div>
+<div th:replace="~{fragments/header :: navbar}"></div>
 <br /><br />
 <div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Nuevo tipo
+                </p>
+            </header>
+            <div class="card-content">
+                <form role="form" method="post" th:action="@{/types/types}" th:object="${type}">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="text"
+                                    placeholder="Inserte el tipo de objeto"
+                                    id="name"
+                                    name="name"
+                                    th:field="*{name}"
+                            >
+                            <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+                        </div>
+                    </div>
+                    <button type="submit" class="button is-link">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container">
     <div class="row col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
@@ -31,6 +61,6 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 </body>
 </html>

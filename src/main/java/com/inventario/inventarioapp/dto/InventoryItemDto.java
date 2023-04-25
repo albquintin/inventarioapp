@@ -17,7 +17,7 @@ public class InventoryItemDto {
     private String name;
     @NotEmpty(message = "Debes elegir una posición para el objeto")
     private String position;
-    private Double price;
+    private Float price;
     private Integer timesRented;
     private String color;
     private String size;

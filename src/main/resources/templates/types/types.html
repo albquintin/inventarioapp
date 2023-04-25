@@ -2,28 +2,43 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="types/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <body>
-<div th:replace="types/header :: navbar"></div>
-
+<div th:replace="~{fragments/header :: navbar}"></div>
 <div class="container">
+    <h1 class="title">Lista de tipos</h1>
+    <table class="table is-bordered">
+        <thead>
+        <tr>
+            <th style="width:10%">#</th>
+            <th style="width:90%">Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "type, typeStat : ${types}">
+            <td th:text="${typeStat.count}">1</td>
+            <td th:text="${type.name}">type name</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<div class="container">
     <div class="row">
         <h1>Lista de tipos de objetos</h1>
     </div>
     <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
-        <th style="width:20%">#</th>
-        <th style="width:40%">Nombre</th>
-        <th style="width:40%">Acciones</th>
+        <th style="width:10%">#</th>
+        <th style="width:90%">Nombre</th>
         </thead>
         <tbody>
         <tr th:each = "type, typeStat : ${types}">
             <td th:text="${typeStat.count}">1</td>
             <td th:text="${type.name}">post title</td>
-            <td></td>
         </tr>
         </tbody>
     </table>
-</div>
+</div>-->
 </body>
 </html>

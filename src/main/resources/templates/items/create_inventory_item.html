@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          Nuevo objeto
+        </p>
+      </header>
+      <div class="card-content">
+        <form role="form" method="post" th:action="@{/items/inventory_items}" th:object="${inventoryItem}" enctype="multipart/form-data" >
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      placeholder="Inserte el nombre del objeto"
+                      id="name"
+                      name="name"
+                      th:field="*{name}"
+              >
+              <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Posición</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      placeholder="Inserte la posición del objeto"
+                      id="position"
+                      name="position"
+                      th:field="*{position}"
+              >
+              <p th:if="${#fields.hasErrors('position')}" class="help is-danger" th:errors="*{position}"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Precio</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="number"
+                      step=".01"
+                      placeholder="Inserte el precio del objeto"
+                      id="price"
+                      name="price"
+                      th:field="*{price}"
+            >
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Color</label>
+            <div class="control">
+              <input
+                    class="input"
+                    type="text"
+                    placeholder="Inserte el color del objeto"
+                    id="color"
+                    name="color"
+                    th:field="*{color}"
+              >
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Tamaño</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      placeholder="Inserte el tamaño del objeto"
+                      id="size"
+                      name="size"
+                      th:field="*{size}"
+              >
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Disponibilidad</label>
+            <div class="control">
+              <textarea
+                      class="textarea"
+                      placeholder="Rellene la disponibilidad del objeto"
+                      id="availability"
+                      name="availability"
+                      th:field="*{availability}"
+              ></textarea>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Tipo y Subtipo</label>
+            <div class="select">
+              <select th:field="*{typeId}">
+                <option th:each="type: ${listTypes}"
+                        th:value="${type.id}"
+                        th:text="${type.name}"
+                ></option>
+              </select>
+            </div>
+            <div class="select">
+              <select th:field="*{subtypeId}">
+                <option th:each="subtype: ${listSubtypes}"
+                        th:value="${subtype.id}"
+                        th:text="${subtype.name}"
+                ></option>
+              </select>
+            </div>
+          </div>
+          <label class="label">Imagen</label>
+          <div class="file">
+            <label class="file-label">
+              <input
+                      class="file-input"
+                      type="file"
+                      name="file"
+                      id="picture"
+              >
+              <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Suba la imagen
+            </span>
+          </span>
+            </label>
+          </div>
+          <br />
+          <button type="submit" class="button is-link">Crear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

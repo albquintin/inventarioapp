@@ -18,8 +18,8 @@ public class InventoryItem {
     private String name;
     @Column(name = "position", nullable = false)
     private String position;
-    @Column(name = "price", nullable = false)
-    private Double price;
+    @Column(name = "price", nullable = false, precision=10, scale=2)
+    private Float price;
     @Column(name = "times_rented")
     private Integer timesRented;
     @Column(name = "color")

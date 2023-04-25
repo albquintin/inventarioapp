@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title is-centered"
+                   th:text="${inventoryItem.name}"
+                ></p>
+            </header>
+            <div class="card-content">
+                <div class="columns">
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Posición</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.position}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Precio</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.price}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Color</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.color}"></div>
+                        </article>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Tamaño</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.size}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Veces alquilado</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.timesRented}"></div>
+                        </article>
+                    </div>
+                </div>
+                <article class="message is-success">
+                    <div class="message-header">
+                        <p>Disponibilidad</p>
+                    </div>
+                    <div class="message-body" th:text="${inventoryItem.availability}"></div>
+                </article>
+                <div class="columns">
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Tipo</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.typeName}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Subtipo</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.subtypeName}"></div>
+                        </article>
+                    </div>
+                </div>
+
+
+                <!--<div th:text="${inventoryItem.position}"></div>
+                <div th:text="${inventoryItem.price}"></div>
+                <div th:text="${inventoryItem.timesRented}"></div>
+                <div th:text="${inventoryItem.color}"></div>
+                <div th:text="${inventoryItem.size}"></div>
+                <div th:text="${inventoryItem.availability}"></div>
+                <div th:text="${inventoryItem.typeName}"></div>
+                <div th:text="${inventoryItem.subtypeName}"></div>-->
+                <hr />
+                <!--<figure class="image is-128x128">
+                    <img th:src="@{'/images/' + ${inventoryItem.picture}}"
+                         style="max-width:25%;">
+                </figure>-->
+                <div style="text-align:center;">
+                    <img th:src="@{'/images/' + ${inventoryItem.picture}}"
+                         style="max-width:25%;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

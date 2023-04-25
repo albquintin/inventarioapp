@@ -26,29 +26,29 @@ public class SubtypeController {
         this.typeService = typeService;
     }
 
-    @GetMapping("/types/subtypes")
+    @GetMapping("/subtypes/subtypes")
     public String subtypes(Model model){
         List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
         model.addAttribute("subtypes", subtypes);
-        return "/types/subtypes";
+        return "/subtypes/subtypes";
     }
 
-    @GetMapping("/types/subtypes/newsubtype")
+    @GetMapping("/subtypes/subtypes/newsubtype")
     public String newSubtypeForm(Model model){
         SubtypeDto subtypeDto = new SubtypeDto();
         model.addAttribute("subtype", subtypeDto);
         List<TypeDto> listTypes = typeService.findAllTypes();
         model.addAttribute("listTypes", listTypes);
-        return "/types/create_subtype";
+        return "/subtypes/create_subtype";
     }
 
-    @PostMapping("types/subtypes")
+    @PostMapping("subtypes/subtypes")
     public String createType(@Valid @ModelAttribute("subtype") SubtypeDto subtypeDto, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("subtype", subtypeDto);
-            return "types/create_subtype";
+            return "subtypes/create_subtype";
         }
         subtypeService.createSubtype(subtypeDto);
-        return "redirect:/types/subtypes";
+        return "redirect:/subtypes/subtypes";
     }
 }

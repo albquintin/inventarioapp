@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventario App</title>
+    <link th:href="@{/css/header.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation" th:fragment="navbar">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+            <img src="/images/logo.png" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Objetos
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" th:href="@{/items/inventory_items}">
+                        Listado
+                    </a>
+                    <a class="navbar-item" th:href="@{/items/inventory_items/newinventoryitem}">
+                        Nuevo objeto
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Tipos
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" th:href="@{/types/types}">
+                        Listado
+                    </a>
+                    <a class="navbar-item" th:href="@{/types/types/newtype}">
+                        Nuevo tipo
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Subtipos
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" th:href="@{/subtypes/subtypes}">
+                        Listado
+                    </a>
+                    <a class="navbar-item" th:href="@{/subtypes/subtypes/newsubtype}">
+                        Nuevo subtipo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
