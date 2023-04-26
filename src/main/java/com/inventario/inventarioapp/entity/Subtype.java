@@ -3,6 +3,8 @@ package com.inventario.inventarioapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,6 +22,9 @@ public class Subtype {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
+
+    @OneToMany(mappedBy = "subtype", cascade = CascadeType.REMOVE)
+    private List<InventoryItem> inventoryItems;
 
     public Subtype(String name, Type type) {
         this.name = name;

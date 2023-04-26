@@ -16,5 +16,7 @@ public interface InventoryItemService {
 
     void deleteInventoryItem(Long inventoryItemId);
 
+    List<InventoryItemDto> searchInventoryItemsByName(String name);
+
 
 }

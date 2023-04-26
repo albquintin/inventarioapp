@@ -111,4 +111,11 @@ public class InventoryItemController {
         model.addAttribute("inventoryItem", inventoryItemDto);
         return "items/view_inventory_item";
     }
+
+    @GetMapping("items/inventory_items/search")
+    public String searchInventoryItemsByName(@RequestParam(value = "name") String name, Model model){
+        List<InventoryItemDto> inventoryItems = inventoryItemService.searchInventoryItemsByName(name);
+        model.addAttribute("inventoryItems", inventoryItems);
+        return "items/inventory_items";
+    }
 }

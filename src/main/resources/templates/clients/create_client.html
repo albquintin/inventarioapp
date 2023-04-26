@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+          Nuevo cliente
+        </p>
+      </header>
+      <div class="card-content">
+        <form role="form" method="post" th:action="@{/clients/clients}" th:object="${client}">
+          <div class="field">
+            <label class="label">Nombre</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      placeholder="Inserte el nombre del cliente"
+                      id="name"
+                      name="name"
+                      th:field="*{name}"
+              >
+              <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Email</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="email"
+                      placeholder="Inserte el email del cliente"
+                      id="email"
+                      name="email"
+                      th:field="*{email}"
+              >
+              <p th:if="${#fields.hasErrors('email')}" class="help is-danger" th:errors="*{email}"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">DNI</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      maxlength="9"
+                      placeholder="Inserte el dni del cliente"
+                      id="dni"
+                      name="dni"
+                      th:field="*{dni}"
+              >
+              <p th:if="${#fields.hasErrors('dni')}" class="help is-danger" th:errors="*{dni}"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Móvil</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      maxlength="12"
+                      placeholder="Inserte el móvil del cliente"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      th:field="*{phoneNumber}"
+              >
+              <p th:if="${#fields.hasErrors('phoneNumber')}" class="help is-danger" th:errors="*{phoneNumber}">
+
+              </p>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Dirección</label>
+            <div class="control">
+              <input
+                      class="input"
+                      type="text"
+                      placeholder="Inserte la dirección del cliente"
+                      id="address"
+                      name="address"
+                      th:field="*{address}"
+              >
+              <p th:if="${#fields.hasErrors('address')}" class="help is-danger" th:errors="*{address}"></p>
+            </div>
+          </div>
+          <button type="submit" class="button is-link">Crear</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

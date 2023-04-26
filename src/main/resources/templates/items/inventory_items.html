@@ -8,7 +8,20 @@
 
 <div class="container">
     <h1 class="title">Lista de objetos</h1>
-    <table class="table is-bordered">
+    <div class="columns">
+        <div class="column is-one-quarter">
+            <form class="form-inline" th:action="@{/items/inventory_items/search}">
+                <div class="input-group">
+                    <input type="text" class="input" name="name">
+                    <button class="button is-link" type="submit">Buscar</button>
+                    <a class="button is-light" th:href="@{/items/inventory_items}">
+                        Limpiar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table is-bordered is-striped">
         <thead>
             <tr>
                 <th style="width:5%">Id</th>

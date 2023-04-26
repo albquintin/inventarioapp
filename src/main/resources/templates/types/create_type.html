@@ -36,31 +36,5 @@
         </div>
     </div>
 </div>
-<!--<div class="container">
-    <div class="row col-md-8 offset-md-2">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="text-center">Nuevo tipo</h2>
-            </div>
-            <div class="card-body">
-                <form role="form" method="post" th:action="@{/types/types}" th:object="${type}">
-                    <div class="mb-3">
-                        <label class="form-label"> Nombre </label>
-                        <input
-                                type="text"
-                                class="form-control"
-                                id="name"
-                                placeholder="Inserte el tipo de objeto"
-                                name="name"
-                                th:field="*{name}"
-                        />
-                        <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
 </body>
 </html>

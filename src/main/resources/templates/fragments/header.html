@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar" role="navigation" aria-label="main navigation" th:fragment="navbar">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="https://elevenplanners.com">
             <img src="/images/logo.png" width="112" height="28">
         </a>
 
@@ -64,6 +64,20 @@
                     </a>
                     <a class="navbar-item" th:href="@{/subtypes/subtypes/newsubtype}">
                         Nuevo subtipo
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Clientes
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" th:href="@{/clients/clients}">
+                        Listado
+                    </a>
+                    <a class="navbar-item" th:href="@{/clients/clients/newclient}">
+                        Nuevo cliente
                     </a>
                 </div>
             </div>

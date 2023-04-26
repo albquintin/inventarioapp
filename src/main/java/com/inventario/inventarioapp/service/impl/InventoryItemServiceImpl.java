@@ -59,4 +59,10 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     public void deleteInventoryItem(Long inventoryItemId) {
         inventoryItemRepository.deleteById(inventoryItemId);
     }
+
+    @Override
+    public List<InventoryItemDto> searchInventoryItemsByName(String name) {
+        List<InventoryItem> inventoryItems = inventoryItemRepository.searchInventoryItemsByName(name);
+        return inventoryItems.stream().map(InventoryItemMapper::mapToInventoryItemDto).collect(Collectors.toList());
+    }
 }
