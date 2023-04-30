@@ -2,7 +2,6 @@ package com.inventario.inventarioapp.controller;
 
 import com.inventario.inventarioapp.dto.SubtypeDto;
 import com.inventario.inventarioapp.dto.TypeDto;
-import com.inventario.inventarioapp.entity.Type;
 import com.inventario.inventarioapp.service.SubtypeService;
 import com.inventario.inventarioapp.service.TypeService;
 import jakarta.validation.Valid;

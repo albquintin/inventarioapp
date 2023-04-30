@@ -3,8 +3,6 @@ package com.inventario.inventarioapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,15 +14,12 @@ public class Subtype {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
-
-    @OneToMany(mappedBy = "subtype", cascade = CascadeType.REMOVE)
-    private List<InventoryItem> inventoryItems;
 
     public Subtype(String name, Type type) {
         this.name = name;

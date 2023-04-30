@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<div class="container">
+    <h1 class="title">Lista de Eventos</h1>
+    <table class="table is-bordered is-striped is-fullwidth" id="eventsTable">
+        <thead>
+        <tr>
+            <th style="width:5%">#</th>
+            <th style="width:20%">Nombre</th>
+            <th style="width:15%">Tipo de evento</th>
+            <th style="width:10%">Coste total</th>
+            <th style="width:20%">Cliente</th>
+            <th style="width:15%">Fecha del evento</th>
+            <th style="width:15%">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "event, eventStat : ${events}">
+            <td th:text="${eventStat.count}">1</td>
+            <td th:text="${event.name}">event name</td>
+            <td th:text="${event.type}">event type</td>
+            <td th:text="${event.price}">event price</td>
+            <td th:text="${event.clientName}">event client</td>
+            <td th:text="${event.eventDay}">event date</td>
+            <td>
+                <a class="button is-primary is-small">
+                    Edit
+                </a>
+                <a class="button is-danger is-small">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
+<script>
+    $(document).ready(function()  {
+        $('#eventsTable').DataTable();
+    });
+    $('#eventsTable').DataTable({
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': [-1]
+        }]
+    });
+</script>
+
+</body>
+</html>

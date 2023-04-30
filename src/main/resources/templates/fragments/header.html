@@ -8,6 +8,7 @@
     <title>Inventario App</title>
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css">
 </head>
 <body>
 <nav class="navbar" role="navigation" aria-label="main navigation" th:fragment="navbar">
@@ -78,6 +79,20 @@
                     </a>
                     <a class="navbar-item" th:href="@{/clients/clients/newclient}">
                         Nuevo cliente
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Eventos
+                </a>
+
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" th:href="@{/events/events}">
+                        Listado
+                    </a>
+                    <a class="navbar-item" th:href="@{/events/events/newevent}">
+                        Nuevo evento
                     </a>
                 </div>
             </div>

@@ -3,6 +3,9 @@ package com.inventario.inventarioapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,6 +25,8 @@ public class InventoryItem {
     private Float price;
     @Column(name = "times_rented")
     private Integer timesRented;
+    @Column(name = "amount")
+    private Integer amount;
     @Column(name = "color")
     private String color;
     @Column(name = "size")
@@ -36,4 +41,6 @@ public class InventoryItem {
     private Subtype subtype;
     @Column(name = "picture")
     private String picture;
+    @ManyToMany(mappedBy = "inventoryItems")
+    private List<Event> events = new ArrayList<>();
 }

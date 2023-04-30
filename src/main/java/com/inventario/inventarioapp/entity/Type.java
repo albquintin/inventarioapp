@@ -3,7 +3,6 @@ package com.inventario.inventarioapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -17,10 +16,8 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
-    @OneToMany(mappedBy = "type", cascade = CascadeType.REMOVE)
-    private List<Subtype> subtypes;
     @OneToMany(mappedBy = "type", cascade = CascadeType.REMOVE)
     private List<InventoryItem> inventoryItems;
 }

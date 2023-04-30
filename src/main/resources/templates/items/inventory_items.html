@@ -8,20 +8,7 @@
 
 <div class="container">
     <h1 class="title">Lista de objetos</h1>
-    <div class="columns">
-        <div class="column is-one-quarter">
-            <form class="form-inline" th:action="@{/items/inventory_items/search}">
-                <div class="input-group">
-                    <input type="text" class="input" name="name">
-                    <button class="button is-link" type="submit">Buscar</button>
-                    <a class="button is-light" th:href="@{/items/inventory_items}">
-                        Limpiar
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped" id="itemsTable">
         <thead>
             <tr>
                 <th style="width:5%">Id</th>
@@ -44,15 +31,15 @@
 
                 <td>
                     <a th:href="@{/items/inventory_items/edit/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-                       class="button is-primary">
+                       class="button is-primary is-small">
                         Edit
                     </a>
                     <a th:href="@{/items/inventory_items/delete/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-                       class="button is-danger">
+                       class="button is-danger is-small">
                         Delete
                     </a>
                     <a th:href="@{/items/inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-                       class="button is-info">
+                       class="button is-info is-small">
                         View
                     </a>
                 </td>
@@ -60,6 +47,19 @@
         </tbody>
     </table>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
+<script>
+    $(document).ready(function()  {
+        $('#itemsTable').DataTable();
+    });
+    $('#itemsTable').DataTable({
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': [-1]
+        }]
+    });
+</script>
 </body>
 </html>

@@ -19,6 +19,7 @@ public class InventoryItemDto {
     private String position;
     private Float price;
     private Integer timesRented;
+    private Integer amount;
     private String color;
     private String size;
     private String availability;

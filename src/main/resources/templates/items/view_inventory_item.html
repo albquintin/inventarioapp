@@ -52,6 +52,14 @@
                     <div class="column">
                         <article class="message is-success">
                             <div class="message-header">
+                                <p>Cantidad</p>
+                            </div>
+                            <div class="message-body" th:text="${inventoryItem.amount}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
                                 <p>Veces alquilado</p>
                             </div>
                             <div class="message-body" th:text="${inventoryItem.timesRented}"></div>

@@ -7,7 +7,7 @@
 <div th:replace="~{fragments/header :: navbar}"></div>
 <div class="container">
     <h1 class="title">Lista de tipos</h1>
-    <table class="table is-bordered is-striped">
+    <table class="table is-bordered is-striped is-fullwidth" id="typesTable">
         <thead>
         <tr>
             <th style="width:10%">#</th>
@@ -22,5 +22,13 @@
         </tbody>
     </table>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
+<script>
+    $(document).ready(function()  {
+        $('#typesTable').DataTable();
+    });
+</script>
 </body>
 </html>

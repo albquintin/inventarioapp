@@ -1,6 +1,5 @@
 package com.inventario.inventarioapp.controller;
 
-import com.inventario.inventarioapp.dto.SubtypeDto;
 import com.inventario.inventarioapp.dto.TypeDto;
 import com.inventario.inventarioapp.service.TypeService;
 import jakarta.validation.Valid;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+
 
 @Controller
 public class TypeController {
