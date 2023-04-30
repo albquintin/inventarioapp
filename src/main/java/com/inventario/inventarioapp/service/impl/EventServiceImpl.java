@@ -35,4 +35,34 @@ public class EventServiceImpl implements EventService {
         Event event = EventMapper.mapToEvent(eventDto, client);
         eventRepository.save(event);
     }
+
+    @Override
+    public void updateEvent(EventDto eventDto) {
+        Client client = clientRepository.findById(eventDto.getClientId()).get();
+        Event event = EventMapper.mapToEvent(eventDto, client);
+        eventRepository.save(event);
+    }
+
+    @Override
+    public EventDto findEventById(Long eventId) {
+        Event event = eventRepository.findById(eventId).get();
+        return EventMapper.mapToEventDto(event);
+    }
+
+    @Override
+    public void deleteEvent(Long eventId) {
+        eventRepository.deleteById(eventId);
+    }
+
+    @Override
+    public List<EventDto> findPastEvents() {
+        List<Event>pastEvents = eventRepository.findPastEvents();
+        return pastEvents.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventDto> findComingEvents() {
+        List<Event>comingEvents = eventRepository.findComingEvents();
+        return comingEvents.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
+    }
 }

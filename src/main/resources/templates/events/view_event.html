@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title is-centered"
+                   th:text="${event.name}"
+                ></p>
+            </header>
+            <div class="card-content">
+                <div class="columns">
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Tipo de Evento</p>
+                            </div>
+                            <div class="message-body" th:text="${event.type}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Coste del evento</p>
+                            </div>
+                            <div class="message-body" th:text="${event.price}"></div>
+                        </article>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Cliente</p>
+                            </div>
+                            <div class="message-body" th:text="${event.clientName}"></div>
+                        </article>
+                    </div>
+                    <div class="column">
+                        <article class="message is-success">
+                            <div class="message-header">
+                                <p>Fecha del evento</p>
+                            </div>
+                            <div class="message-body" th:text="${event.eventDay}"></div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

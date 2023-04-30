@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Editar evento
+                </p>
+            </header>
+            <div class="card-content">
+                <form role="form" method="post" th:action="@{/events/events/{eventId}(eventId=${event.id})}" th:object="${event}">
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    th:field="*{name}"
+                            >
+                            <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="text"
+                                    id="type"
+                                    name="type"
+                                    th:field="*{type}"
+                            >
+                            <p th:if="${#fields.hasErrors('type')}" class="help is-danger" th:errors="*{type}"></p>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Precio</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="number"
+                                    step=".01"
+                                    id="price"
+                                    name="price"
+                                    th:field="*{price}"
+                            >
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Cliente</label>
+                        <div class="select">
+                            <select th:field="*{clientId}">
+                                <option th:each="client: ${clients}"
+                                        th:value="${client.id}"
+                                        th:text="${client.name}"
+                                ></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Fecha del evento</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="date"
+                                    id="eventDay"
+                                    name="eventDay"
+                                    th:field="*{eventDay}"
+                            >
+                        </div>
+                    </div>
+                    <br />
+                    <button type="submit" class="button is-link">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
