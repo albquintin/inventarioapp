@@ -30,7 +30,13 @@
                             <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
                         </div>
                     </div>
-                    <button type="submit" class="button is-link">Crear</button>
+                    <div>
+                        <button type="submit" class="button is-link">Crear</button>
+                        <a th:href="@{/types/types}"
+                           class="button is-light">
+                            Volver
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>

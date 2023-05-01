@@ -36,15 +36,17 @@ public class SubtypeController {
     public String newSubtypeForm(Model model){
         SubtypeDto subtypeDto = new SubtypeDto();
         model.addAttribute("subtype", subtypeDto);
-        List<TypeDto> listTypes = typeService.findAllTypes();
-        model.addAttribute("listTypes", listTypes);
+        List<TypeDto> types = typeService.findAllTypes();
+        model.addAttribute("types", types);
         return "/subtypes/create_subtype";
     }
 
     @PostMapping("subtypes/subtypes")
-    public String createType(@Valid @ModelAttribute("subtype") SubtypeDto subtypeDto, BindingResult result, Model model){
+    public String createSubtype(@Valid @ModelAttribute("subtype") SubtypeDto subtypeDto, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("subtype", subtypeDto);
+            List<TypeDto> types = typeService.findAllTypes();
+            model.addAttribute("types", types);
             return "subtypes/create_subtype";
         }
         subtypeService.createSubtype(subtypeDto);

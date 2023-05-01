@@ -3,8 +3,7 @@ package com.inventario.inventarioapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -41,6 +40,6 @@ public class InventoryItem {
     private Subtype subtype;
     @Column(name = "picture")
     private String picture;
-    @ManyToMany(mappedBy = "inventoryItems")
-    private List<Event> events = new ArrayList<>();
+    @OneToMany(mappedBy = "inventoryItem", cascade = CascadeType.ALL)
+    private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }

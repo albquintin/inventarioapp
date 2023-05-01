@@ -1,15 +1,13 @@
 package com.inventario.inventarioapp.controller;
 
-import com.inventario.inventarioapp.dto.InventoryItemDto;
-import com.inventario.inventarioapp.dto.SubtypeDto;
-import com.inventario.inventarioapp.dto.TypeDto;
-import com.inventario.inventarioapp.service.InventoryItemService;
-import com.inventario.inventarioapp.service.SubtypeService;
-import com.inventario.inventarioapp.service.TypeService;
+import com.inventario.inventarioapp.dto.*;
+import com.inventario.inventarioapp.entity.InventoryItem;
+import com.inventario.inventarioapp.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,11 +23,17 @@ public class InventoryItemController {
     private InventoryItemService inventoryItemService;
     private SubtypeService subtypeService;
     private TypeService typeService;
+    private EventService eventService;
+    private EventInventoryItemService eventInventoryItemService;
 
-    public InventoryItemController(InventoryItemService inventoryItemService, SubtypeService subtypeService, TypeService typeService){
+    public InventoryItemController(InventoryItemService inventoryItemService, SubtypeService subtypeService,
+                                   TypeService typeService, EventService eventService,
+                                   EventInventoryItemService eventInventoryItemService){
         this.inventoryItemService = inventoryItemService;
         this.subtypeService = subtypeService;
         this.typeService = typeService;
+        this.eventService = eventService;
+        this.eventInventoryItemService = eventInventoryItemService;
     }
 
     @GetMapping("/items/inventory_items")
@@ -43,10 +47,10 @@ public class InventoryItemController {
     public String newInventoryItemForm(Model model){
         InventoryItemDto inventoryItemDto = new InventoryItemDto();
         model.addAttribute("inventoryItem", inventoryItemDto);
-        List<TypeDto> listTypes = typeService.findAllTypes();
-        model.addAttribute("listTypes", listTypes);
-        List<SubtypeDto> listSubtypes = subtypeService.findAllSubtypes();
-        model.addAttribute("listSubtypes", listSubtypes);
+        List<TypeDto> types = typeService.findAllTypes();
+        model.addAttribute("types", types);
+        List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+        model.addAttribute("subtypes", subtypes);
         return "/items/create_inventory_item";
     }
     @PostMapping("items/inventory_items")
@@ -56,6 +60,10 @@ public class InventoryItemController {
 
         if(result.hasErrors()){
             model.addAttribute("inventoryItem", inventoryItemDto);
+            List<TypeDto> types = typeService.findAllTypes();
+            model.addAttribute("types", types);
+            List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+            model.addAttribute("subtypes", subtypes);
             return "items/create_inventory_item";
         }
         if(!picture.isEmpty()){
@@ -71,6 +79,7 @@ public class InventoryItemController {
                 e.printStackTrace();
             }
         }
+        inventoryItemDto.setTimesRented(0);
         inventoryItemService.createInventoryItem(inventoryItemDto);
         return "redirect:/items/inventory_items";
     }
@@ -78,10 +87,10 @@ public class InventoryItemController {
     public String editInventoryItemForm(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
         InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
         model.addAttribute("inventoryItem", inventoryItemDto);
-        List<TypeDto> listTypes = typeService.findAllTypes();
-        model.addAttribute("listTypes", listTypes);
-        List<SubtypeDto> listSubtypes = subtypeService.findAllSubtypes();
-        model.addAttribute("listSubtypes", listSubtypes);
+        List<TypeDto> types = typeService.findAllTypes();
+        model.addAttribute("types", types);
+        List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+        model.addAttribute("subtypes", subtypes);
         return "items/edit_inventory_item";
     }
 
@@ -92,6 +101,10 @@ public class InventoryItemController {
 
         if(result.hasErrors()){
             model.addAttribute("inventoryItem", inventoryItem);
+            List<TypeDto> types = typeService.findAllTypes();
+            model.addAttribute("types", types);
+            List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+            model.addAttribute("subtypes", subtypes);
             return "items/edit_inventory_item";
         }
 
@@ -117,5 +130,35 @@ public class InventoryItemController {
         List<InventoryItemDto> inventoryItems = inventoryItemService.searchInventoryItemsByName(name);
         model.addAttribute("inventoryItems", inventoryItems);
         return "items/inventory_items";
+    }
+
+    @GetMapping("items/inventory_items/rent/{inventoryItemId}")
+    public String rentInventoryItemForm(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
+        EventInventoryItemDto eventInventoryItemDto = new EventInventoryItemDto();
+        model.addAttribute("eventInventoryItem", eventInventoryItemDto);
+        InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
+        model.addAttribute("inventoryItem", inventoryItemDto);
+        List<EventDto> events = eventService.findComingEvents();
+        model.addAttribute("events", events);
+        return "items/rent_inventory_item";
+    }
+
+    @PostMapping("items/rent_inventory_item/{inventoryItemId}")
+    public String rentInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId,
+                                    @Valid @ModelAttribute("eventInventoryItem") EventInventoryItemDto eventInventoryItemDto,
+                                    BindingResult result, Model model){
+        InventoryItemDto inventoryItem = inventoryItemService.findInventoryItemById(inventoryItemId);
+        if(result.hasErrors() || eventInventoryItemDto.getAmount() > inventoryItem.getAmount()){
+            model.addAttribute("eventInventoryItem", eventInventoryItemDto);
+            model.addAttribute("inventoryItem", inventoryItem);
+            List<EventDto> events = eventService.findComingEvents();
+            model.addAttribute("events", events);
+            model.addAttribute("wrongAmount", true);
+            return "items/rent_inventory_item";
+        }
+        eventInventoryItemDto.setInventoryItemId(inventoryItemId);
+        inventoryItemService.increaseOneTimesRentedInventoryItem(inventoryItemId);
+        eventInventoryItemService.rentInventoryItem(eventInventoryItemDto);
+        return "redirect:/items/inventory_items";
     }
 }

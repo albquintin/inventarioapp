@@ -8,7 +8,7 @@
 
 <div class="container">
     <h1 class="title">Lista de objetos</h1>
-    <table class="table is-bordered is-striped" id="itemsTable">
+    <table class="table is-bordered is-striped is-fullwidth" id="itemsTable">
         <thead>
             <tr>
                 <th style="width:5%">Id</th>
@@ -32,15 +32,15 @@
                 <td>
                     <a th:href="@{/items/inventory_items/edit/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
                        class="button is-primary is-small">
-                        Edit
+                        Editar
                     </a>
                     <a th:href="@{/items/inventory_items/delete/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
                        class="button is-danger is-small">
-                        Delete
+                        Borrar
                     </a>
                     <a th:href="@{/items/inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
                        class="button is-info is-small">
-                        View
+                        Detalles
                     </a>
                 </td>
             </tr>

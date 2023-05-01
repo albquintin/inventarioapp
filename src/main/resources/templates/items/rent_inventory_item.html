@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title" th:text="'Alquilar ' + ${inventoryItem.name}">
+
+                </p>
+            </header>
+            <div class="card-content">
+                <form role="form" method="post" th:action="@{/items/rent_inventory_item/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}" th:object="${eventInventoryItem}" >
+                    <div class="field">
+                        <label class="label">Evento</label>
+                        <div class="select">
+                            <select th:field="*{eventId}">
+                                <option th:each="event: ${events}"
+                                        th:value="${event.id}"
+                                        th:text="${event.name}"
+                                ></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Número de objetos</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="number"
+                                    placeholder="Inserte el número de objetos a alquilar"
+                                    id="amount"
+                                    name="amount"
+                                    th:field="*{amount}"
+                            >
+                        </div>
+                        <!--<p th:if="${wrongAmount} == true" class="help is-danger" th:errors="*{amount}"></p>-->
+                        <p th:if="${wrongAmount} == true" class="help is-danger">
+                            El número de objetos alquilados debe ser mayor que 0 y menor o igual que el total disponible
+                        </p>
+                    </div>
+                    <div>
+                        <button type="submit" class="button is-link">Alquilar</button>
+                        <a th:href="@{/items/inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
+                           class="button is-light">
+                            Volver
+                        </a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -65,4 +65,9 @@ public class InventoryItemServiceImpl implements InventoryItemService {
         List<InventoryItem> inventoryItems = inventoryItemRepository.searchInventoryItemsByName(name);
         return inventoryItems.stream().map(InventoryItemMapper::mapToInventoryItemDto).collect(Collectors.toList());
     }
+
+    @Override
+    public void increaseOneTimesRentedInventoryItem(Long inventoryItemId) {
+        inventoryItemRepository.increaseOneTimesRentedInventoryItem(inventoryItemId);
+    }
 }

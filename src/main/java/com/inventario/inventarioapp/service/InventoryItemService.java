@@ -18,5 +18,5 @@ public interface InventoryItemService {
 
     List<InventoryItemDto> searchInventoryItemsByName(String name);
 
-
+    void increaseOneTimesRentedInventoryItem(Long inventoryItemId);
 }

@@ -106,7 +106,7 @@
             <label class="label">Tipo y Subtipo</label>
             <div class="select">
               <select th:field="*{typeId}">
-                <option th:each="type: ${listTypes}"
+                <option th:each="type: ${types}"
                         th:value="${type.id}"
                         th:text="${type.name}"
                 ></option>
@@ -114,7 +114,7 @@
             </div>
             <div class="select">
               <select th:field="*{subtypeId}">
-                <option th:each="subtype: ${listSubtypes}"
+                <option th:each="subtype: ${subtypes}"
                         th:value="${subtype.id}"
                         th:text="${subtype.name}"
                 ></option>
@@ -141,7 +141,13 @@
             </label>
           </div>
           <br />
-          <button type="submit" class="button is-link">Editar</button>
+          <div>
+            <button type="submit" class="button is-link">Editar</button>
+            <a th:href="@{/items/inventory_items}"
+               class="button is-light">
+              Volver
+            </a>
+          </div>
         </form>
       </div>
     </div>

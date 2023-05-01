@@ -52,14 +52,16 @@ public class EventController {
     public String newClientForm(Model model){
         EventDto eventDto = new EventDto();
         model.addAttribute("event", eventDto);
-        List<ClientDto> clientList = clientService.findAllClients();
-        model.addAttribute("clients", clientList);
+        List<ClientDto> clients = clientService.findAllClients();
+        model.addAttribute("clients", clients);
         return "/events/create_event";
     }
     @PostMapping("events/events")
     public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("event", eventDto);
+            List<ClientDto> clients = clientService.findAllClients();
+            model.addAttribute("clients", clients);
             return "/events/create_event";
         }
         eventService.createEvent(eventDto);
@@ -70,8 +72,8 @@ public class EventController {
     public String editEventForm(@PathVariable("eventId") Long eventId, Model model){
         EventDto eventDto = eventService.findEventById(eventId);
         model.addAttribute("event", eventDto);
-        List<ClientDto> listClients = clientService.findAllClients();
-        model.addAttribute("clients", listClients);
+        List<ClientDto> clients = clientService.findAllClients();
+        model.addAttribute("clients", clients);
         return "events/edit_event";
     }
 
@@ -81,6 +83,8 @@ public class EventController {
                               BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("event", event);
+            List<ClientDto> clients = clientService.findAllClients();
+            model.addAttribute("clients", clients);
             return "events/edit_event";
         }
         event.setId(eventId);

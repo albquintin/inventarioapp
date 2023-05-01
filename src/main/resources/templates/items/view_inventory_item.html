@@ -95,6 +95,16 @@
                     <img th:src="@{'/images/' + ${inventoryItem.picture}}"
                          style="max-width:25%;">
                 </div>
+                <div>
+                    <a th:href="@{/items/inventory_items/rent/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
+                       class="button is-primary">
+                        Alquilar
+                    </a>
+                    <a th:href="@{/items/inventory_items}"
+                       class="button is-light">
+                        Volver
+                    </a>
+                </div>
             </div>
         </div>
 

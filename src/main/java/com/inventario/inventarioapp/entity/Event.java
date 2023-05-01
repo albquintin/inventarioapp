@@ -5,7 +5,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,11 +31,6 @@ public class Event {
     private Client client;
     @Column(name = "event_day")
     private LocalDate eventDay;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "events_inventory_items",
-            joinColumns = {@JoinColumn(name = "event_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "inventory_item_id", referencedColumnName = "id")}
-    )
-    private List<InventoryItem> inventoryItems = new ArrayList<>();
+    @OneToMany(mappedBy = "event")
+    private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }
