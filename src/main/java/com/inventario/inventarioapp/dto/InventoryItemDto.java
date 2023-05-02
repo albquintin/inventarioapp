@@ -1,6 +1,8 @@
 package com.inventario.inventarioapp.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +27,7 @@ public class InventoryItemDto {
     private String availability;
     private Long typeId;
     private String typeName;
+    @Min(value = 0L, message = "Debes elegir un subtipo para el objeto")
     private Long subtypeId;
     private String subtypeName;
     private String picture;

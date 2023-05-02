@@ -9,4 +9,6 @@ public interface SubtypeService {
     List<SubtypeDto> findAllSubtypes();
 
     void createSubtype(SubtypeDto subtypeDto);
+
+    List<SubtypeDto> findSubtypesByType(Long typeId);
 }

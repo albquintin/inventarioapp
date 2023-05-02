@@ -27,7 +27,7 @@ public class SubtypeServiceImpl implements SubtypeService {
     @Override
     public List<SubtypeDto> findAllSubtypes() {
         List<Subtype> subtypes = subtypeRepository.findAll();
-        return subtypes.stream().map((subtype) -> SubtypeMapper.mapToSubtypeDto(subtype)).collect(Collectors.toList());
+        return subtypes.stream().map(SubtypeMapper::mapToSubtypeDto).collect(Collectors.toList());
     }
 
     @Override
@@ -35,5 +35,11 @@ public class SubtypeServiceImpl implements SubtypeService {
         Optional<Type> type = typeRepository.findById(subtypeDto.getTypeId());
         Subtype subtype = SubtypeMapper.mapToSubtype(subtypeDto, type.get());
         subtypeRepository.save(subtype);
+    }
+
+    @Override
+    public List<SubtypeDto> findSubtypesByType(Long typeId) {
+        List<Subtype>subtypes = subtypeRepository.findSubtypesByType(typeId);
+        return subtypes.stream().map(SubtypeMapper::mapToSubtypeDto).collect(Collectors.toList());
     }
 }

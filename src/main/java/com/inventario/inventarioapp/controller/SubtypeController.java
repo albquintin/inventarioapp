@@ -1,5 +1,8 @@
 package com.inventario.inventarioapp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.inventario.inventarioapp.dto.SubtypeDto;
 import com.inventario.inventarioapp.dto.TypeDto;
 import com.inventario.inventarioapp.service.SubtypeService;
@@ -8,9 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,5 +52,18 @@ public class SubtypeController {
         }
         subtypeService.createSubtype(subtypeDto);
         return "redirect:/subtypes/subtypes";
+    }
+
+    @ResponseBody
+    @GetMapping(value = "loadSubtypesByType/{typeId}")
+    public String loadSubtypesByType(@PathVariable("typeId") Long typeId){
+        String json = null;
+        List<SubtypeDto>subtypes = subtypeService.findSubtypesByType(typeId);
+        try{
+            json = new ObjectMapper().writeValueAsString(subtypes);
+        }catch(JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

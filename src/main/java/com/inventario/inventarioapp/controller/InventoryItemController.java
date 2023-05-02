@@ -89,7 +89,7 @@ public class InventoryItemController {
         model.addAttribute("inventoryItem", inventoryItemDto);
         List<TypeDto> types = typeService.findAllTypes();
         model.addAttribute("types", types);
-        List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+        List<SubtypeDto> subtypes = subtypeService.findSubtypesByType(inventoryItemDto.getTypeId());
         model.addAttribute("subtypes", subtypes);
         return "items/edit_inventory_item";
     }
@@ -103,7 +103,7 @@ public class InventoryItemController {
             model.addAttribute("inventoryItem", inventoryItem);
             List<TypeDto> types = typeService.findAllTypes();
             model.addAttribute("types", types);
-            List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
+            List<SubtypeDto> subtypes = subtypeService.findSubtypesByType(inventoryItem.getTypeId());
             model.addAttribute("subtypes", subtypes);
             return "items/edit_inventory_item";
         }

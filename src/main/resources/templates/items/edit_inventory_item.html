@@ -105,7 +105,7 @@
           <div class="field">
             <label class="label">Tipo y Subtipo</label>
             <div class="select">
-              <select th:field="*{typeId}">
+              <select th:field="*{typeId}" id="types">
                 <option th:each="type: ${types}"
                         th:value="${type.id}"
                         th:text="${type.name}"
@@ -113,10 +113,10 @@
               </select>
             </div>
             <div class="select">
-              <select th:field="*{subtypeId}">
+              <select th:field="*{subtypeId}" id="subtypes">
                 <option th:each="subtype: ${subtypes}"
                         th:value="${subtype.id}"
-                        th:text="${subtype.name}"
+                        th:text="${inventoryItem.subtypeName}"
                 ></option>
               </select>
             </div>
@@ -153,5 +153,26 @@
     </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  $(document).ready(function(){
+    $("#types").change(function(){
+      var typeId = $("#types").val();
+      var s = '<option value=' + -1 + '>Elija el subtipo</option>';
+      $.ajax({
+        type: 'GET',
+        url: '/loadSubtypesByType/' + typeId,
+        success: function(result){
+          var result = JSON.parse(result);
+          for (var i = 0; i < result.length; i++) {
+        	  s += '<option value="' + result[i].id + '">'+ result[i].name+ '</option>';
+        	  console.log(result);
+          }
+          $('#subtypes').html(s);
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
