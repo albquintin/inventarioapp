@@ -25,4 +25,6 @@ public class Client {
     private String phoneNumber;
     @Column(name = "address", nullable = false, length = 100)
     private String address;
+    @Column(name = "active")
+    private Boolean active;
 }

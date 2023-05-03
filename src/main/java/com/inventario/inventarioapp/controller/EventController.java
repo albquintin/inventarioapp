@@ -2,8 +2,10 @@ package com.inventario.inventarioapp.controller;
 
 import com.inventario.inventarioapp.dto.ClientDto;
 import com.inventario.inventarioapp.dto.EventDto;
-import com.inventario.inventarioapp.entity.Event;
+import com.inventario.inventarioapp.dto.EventInventoryItemDto;
+import com.inventario.inventarioapp.entity.EventInventoryItemId;
 import com.inventario.inventarioapp.service.ClientService;
+import com.inventario.inventarioapp.service.EventInventoryItemService;
 import com.inventario.inventarioapp.service.EventService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -21,38 +23,32 @@ public class EventController {
 
     public EventService eventService;
     public ClientService clientService;
+    public EventInventoryItemService eventInventoryItemService;
 
-    public EventController(EventService eventService, ClientService clientService) {
+    public EventController(EventService eventService, ClientService clientService, EventInventoryItemService eventInventoryItemService) {
         this.eventService = eventService;
         this.clientService = clientService;
+        this.eventInventoryItemService = eventInventoryItemService;
     }
 
     @GetMapping("/events/events")
     public String events(Model model){
-        List<EventDto> events = eventService.findAllEvents();
+        List<EventDto> events = eventService.findActiveEvents();
         model.addAttribute("events", events);
-        model.addAttribute("title", "Lista de Eventos");
         return "/events/events";
     }
-    @GetMapping("/events/past_events")
-    public String pastEvents(Model model){
-        List<EventDto> pastEvents = eventService.findPastEvents();
-        model.addAttribute("events", pastEvents);
-        model.addAttribute("title", "Eventos Pasados");
-        return "/events/events";
+    @GetMapping("/events/old_events")
+    public String oldEvents(Model model){
+        List<EventDto> events = eventService.findOldEvents();
+        model.addAttribute("events", events);
+        return "/events/old_events";
     }
-    @GetMapping("/events/coming_events")
-    public String comingEvents(Model model){
-        List<EventDto> pastEvents = eventService.findComingEvents();
-        model.addAttribute("events", pastEvents);
-        model.addAttribute("title", "Próximos Eventos");
-        return "/events/events";
-    }
+
     @GetMapping("/events/events/newevent")
     public String newClientForm(Model model){
         EventDto eventDto = new EventDto();
         model.addAttribute("event", eventDto);
-        List<ClientDto> clients = clientService.findAllClients();
+        List<ClientDto> clients = clientService.findActiveClients();
         model.addAttribute("clients", clients);
         return "/events/create_event";
     }
@@ -60,10 +56,11 @@ public class EventController {
     public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("event", eventDto);
-            List<ClientDto> clients = clientService.findAllClients();
+            List<ClientDto> clients = clientService.findActiveClients();
             model.addAttribute("clients", clients);
             return "/events/create_event";
         }
+        eventDto.setActive(true);
         eventService.createEvent(eventDto);
         return "redirect:/events/events";
     }
@@ -72,7 +69,7 @@ public class EventController {
     public String editEventForm(@PathVariable("eventId") Long eventId, Model model){
         EventDto eventDto = eventService.findEventById(eventId);
         model.addAttribute("event", eventDto);
-        List<ClientDto> clients = clientService.findAllClients();
+        List<ClientDto> clients = clientService.findActiveClients();
         model.addAttribute("clients", clients);
         return "events/edit_event";
     }
@@ -83,7 +80,7 @@ public class EventController {
                               BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("event", event);
-            List<ClientDto> clients = clientService.findAllClients();
+            List<ClientDto> clients = clientService.findActiveClients();
             model.addAttribute("clients", clients);
             return "events/edit_event";
         }
@@ -93,14 +90,34 @@ public class EventController {
     }
 
     @GetMapping("events/events/delete/{eventId}")
+    public String logicDeleteEvent(@PathVariable("eventId") Long eventId, Model model){
+        eventService.logicDeleteEvent(eventId);
+        return "redirect:/events/events";
+    }
+    @GetMapping("events/old_events/delete/{eventId}")
     public String deleteEvent(@PathVariable("eventId") Long eventId, Model model){
         eventService.deleteEvent(eventId);
+        return "redirect:/events/old_events";
+    }
+    @GetMapping("events/old_events/restore/{eventId}")
+    public String restoreEvent(@PathVariable("eventId") Long eventId, Model model){
+        eventService.restoreEvent(eventId);
         return "redirect:/events/events";
     }
     @GetMapping("events/events/view/{eventId}")
     public String viewEvent(@PathVariable("eventId") Long eventId, Model model){
         EventDto eventDto = eventService.findEventById(eventId);
         model.addAttribute("event", eventDto);
+        List<EventInventoryItemDto> eventInventoryItemDtos = eventInventoryItemService.findByEvent(eventId);
+        model.addAttribute("eventInventoryItems", eventInventoryItemDtos);
         return "events/view_event";
+    }
+
+    @GetMapping("events/events/view/delete/{eventId}/{inventoryItemId}")
+    public String deleteInventoryItemFromEvent(@PathVariable("inventoryItemId") Long inventoryItemId,
+                                               @PathVariable("eventId") Long eventId, Model model){
+        EventInventoryItemId eventInventoryItemId = new EventInventoryItemId(eventId, inventoryItemId);
+        eventInventoryItemService.deleteEventInventoryItemById(eventInventoryItemId);
+        return "redirect:/events/events/view/" + eventId;
     }
 }

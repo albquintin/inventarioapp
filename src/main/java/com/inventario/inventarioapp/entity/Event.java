@@ -31,6 +31,9 @@ public class Event {
     private Client client;
     @Column(name = "event_day")
     private LocalDate eventDay;
+
+    @Column(name = "active")
+    private Boolean active;
     @OneToMany(mappedBy = "event")
     private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }

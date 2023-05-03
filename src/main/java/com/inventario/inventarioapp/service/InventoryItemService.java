@@ -3,10 +3,12 @@ package com.inventario.inventarioapp.service;
 import com.inventario.inventarioapp.dto.InventoryItemDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface InventoryItemService {
 
-    List<InventoryItemDto> findAllInventoryItems();
+    List<InventoryItemDto> findActiveInventoryItems();
+    List<InventoryItemDto> findOldInventoryItems();
 
     void createInventoryItem(InventoryItemDto inventoryItemDto);
 
@@ -14,9 +16,11 @@ public interface InventoryItemService {
 
     InventoryItemDto findInventoryItemById(Long inventoryItemId);
 
+    void logicDeleteInventoryItem(Long inventoryItemId);
     void deleteInventoryItem(Long inventoryItemId);
-
-    List<InventoryItemDto> searchInventoryItemsByName(String name);
+    void restoreInventoryItem(Long inventoryItemId);
 
     void increaseOneTimesRentedInventoryItem(Long inventoryItemId);
+
+    Optional<InventoryItemDto> findInventoryItemByPosition(String position);
 }

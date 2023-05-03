@@ -18,7 +18,7 @@ public class InventoryItem {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "position", nullable = false)
+    @Column(name = "position", nullable = false, unique = true)
     private String position;
     @Column(name = "price", nullable = false, precision=10, scale=2)
     private Float price;
@@ -40,6 +40,8 @@ public class InventoryItem {
     private Subtype subtype;
     @Column(name = "picture")
     private String picture;
+    @Column(name = "active")
+    private Boolean active;
     @OneToMany(mappedBy = "inventoryItem", cascade = CascadeType.ALL)
     private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }

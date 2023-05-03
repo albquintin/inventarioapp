@@ -28,8 +28,13 @@ public class InventoryItemServiceImpl implements InventoryItemService {
         this.inventoryItemRepository = inventoryItemRepository;
     }
     @Override
-    public List<InventoryItemDto> findAllInventoryItems() {
-        List<InventoryItem> inventoryItems = inventoryItemRepository.findAll();
+    public List<InventoryItemDto> findActiveInventoryItems() {
+        List<InventoryItem> inventoryItems = inventoryItemRepository.findActiveInventoryItems();
+        return inventoryItems.stream().map((inventoryItem) -> InventoryItemMapper.mapToInventoryItemDto(inventoryItem)).collect(Collectors.toList());
+    }
+    @Override
+    public List<InventoryItemDto> findOldInventoryItems() {
+        List<InventoryItem> inventoryItems = inventoryItemRepository.findOldInventoryItems();
         return inventoryItems.stream().map((inventoryItem) -> InventoryItemMapper.mapToInventoryItemDto(inventoryItem)).collect(Collectors.toList());
     }
 
@@ -56,18 +61,30 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     }
 
     @Override
+    public void logicDeleteInventoryItem(Long inventoryItemId) {
+        inventoryItemRepository.logicDeleteById(inventoryItemId);
+    }
+    @Override
     public void deleteInventoryItem(Long inventoryItemId) {
         inventoryItemRepository.deleteById(inventoryItemId);
     }
-
     @Override
-    public List<InventoryItemDto> searchInventoryItemsByName(String name) {
-        List<InventoryItem> inventoryItems = inventoryItemRepository.searchInventoryItemsByName(name);
-        return inventoryItems.stream().map(InventoryItemMapper::mapToInventoryItemDto).collect(Collectors.toList());
+    public void restoreInventoryItem(Long inventoryItemId) {
+        inventoryItemRepository.restoreInventoryItem(inventoryItemId);
     }
 
     @Override
     public void increaseOneTimesRentedInventoryItem(Long inventoryItemId) {
         inventoryItemRepository.increaseOneTimesRentedInventoryItem(inventoryItemId);
+    }
+
+    @Override
+    public Optional<InventoryItemDto> findInventoryItemByPosition(String position) {
+        InventoryItem inventoryItem = inventoryItemRepository.findInventoryItemByPosition(position);
+        if(inventoryItem == null)
+            return Optional.empty();
+        else
+            return Optional.of(InventoryItemMapper.mapToInventoryItemDto(inventoryItem));
+
     }
 }

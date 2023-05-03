@@ -7,11 +7,12 @@ import java.util.List;
 
 public interface EventService {
 
-    List<EventDto> findAllEvents();
+    List<EventDto> findActiveEvents();
+    List<EventDto> findOldEvents();
     void createEvent(EventDto eventDto);
     void updateEvent(EventDto eventDto);
     EventDto findEventById(Long eventId);
+    void logicDeleteEvent(Long eventId);
     void deleteEvent(Long eventId);
-    List<EventDto> findPastEvents();
-    List<EventDto> findComingEvents();
+    void restoreEvent(Long eventId);
 }

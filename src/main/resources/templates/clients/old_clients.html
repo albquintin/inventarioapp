@@ -6,8 +6,8 @@
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
 <div class="container">
-  <h1 class="title">Lista de Clientes</h1>
-  <table class="table is-bordered is-striped is-fullwidth" id="clientsTable">
+  <h1 class="title">Antiguos Clientes</h1>
+  <table class="table is-bordered is-striped is-fullwidth" id="oldClientsTable">
     <thead>
     <tr>
       <th style="width:5%">#</th>
@@ -28,11 +28,11 @@
       <td th:text="${client.phoneNumber}">client phone</td>
       <td th:text="${client.address}">client address</td>
       <td>
-        <a th:href="@{/clients/clients/edit/{clientId}(clientId=${client.id})}"
+        <a th:href="@{/clients/old_clients/restore/{clientId}(clientId=${client.id})}"
            class="button is-primary is-small">
-          Editar
+          Restaurar
         </a>
-        <a th:href="@{/clients/clients/delete/{clientId}(clientId=${client.id})}"
+        <a th:href="@{/clients/old_clients/delete/{clientId}(clientId=${client.id})}"
            class="button is-danger is-small">
           Borrar
         </a>
@@ -47,7 +47,7 @@
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
 <script>
     $(document).ready(function()  {
-        $('#clientsTable').DataTable();
+        $('#oldClientsTable').DataTable();
     });
     $('#clientsTable').DataTable({
         'aoColumnDefs': [{

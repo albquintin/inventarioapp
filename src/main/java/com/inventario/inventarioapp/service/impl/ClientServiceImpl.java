@@ -20,8 +20,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientDto> findAllClients() {
-        List<Client> clients = clientRepository.findAll();
+    public List<ClientDto> findActiveClients() {
+        List<Client> clients = clientRepository.findActiveClients();
+        return clients.stream().map((client) -> ClientMapper.mapToClientDto(client)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ClientDto> findOldClients() {
+        List<Client> clients = clientRepository.findOldClients();
         return clients.stream().map((client) -> ClientMapper.mapToClientDto(client)).collect(Collectors.toList());
     }
 
@@ -44,7 +50,17 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public void logicDeleteClient(Long clientId) {
+        clientRepository.logicDeleteById(clientId);
+    }
+
+    @Override
     public void deleteClient(Long clientId) {
         clientRepository.deleteById(clientId);
     }
+    @Override
+    public void restoreClient(Long clientId) {
+        clientRepository.restoreClient(clientId);
+    }
+
 }

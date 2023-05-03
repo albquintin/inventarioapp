@@ -1,5 +1,6 @@
 package com.inventario.inventarioapp.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public class InventoryItemDto {
     private Long id;
     @NotEmpty(message = "Debes elegir un nombre para el objeto")
     private String name;
-    @NotEmpty(message = "Debes elegir una posición para el objeto")
+    @NotEmpty(message = "Debes elegir una posición nueva para el objeto")
     private String position;
     private Float price;
     private Integer timesRented;
@@ -31,5 +32,6 @@ public class InventoryItemDto {
     private Long subtypeId;
     private String subtypeName;
     private String picture;
+    private Boolean active;
 
 }

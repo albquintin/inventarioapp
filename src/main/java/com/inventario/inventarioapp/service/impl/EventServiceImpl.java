@@ -24,8 +24,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDto> findAllEvents() {
-        List<Event> events = eventRepository.findAll();
+    public List<EventDto> findActiveEvents() {
+        List<Event> events = eventRepository.findActiveEvents();
+        return events.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
+    }
+    @Override
+    public List<EventDto> findOldEvents() {
+        List<Event> events = eventRepository.findOldEvents();
         return events.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
     }
 
@@ -50,19 +55,16 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public void logicDeleteEvent(Long eventId) {
+        eventRepository.logicDeleteById(eventId);
+    }
+    @Override
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
     }
-
     @Override
-    public List<EventDto> findPastEvents() {
-        List<Event>pastEvents = eventRepository.findPastEvents();
-        return pastEvents.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
+    public void restoreEvent(Long eventId) {
+        eventRepository.restoreEvent(eventId);
     }
 
-    @Override
-    public List<EventDto> findComingEvents() {
-        List<Event>comingEvents = eventRepository.findComingEvents();
-        return comingEvents.stream().map(EventMapper::mapToEventDto).collect(Collectors.toList());
-    }
 }

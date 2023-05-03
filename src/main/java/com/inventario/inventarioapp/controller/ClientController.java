@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Controller
@@ -24,9 +25,15 @@ public class ClientController {
 
     @GetMapping("/clients/clients")
     public String clients(Model model){
-        List<ClientDto> clients = clientService.findAllClients();
+        List<ClientDto> clients = clientService.findActiveClients();
         model.addAttribute("clients", clients);
         return "/clients/clients";
+    }
+    @GetMapping("/clients/old_clients")
+    public String oldClients(Model model){
+        List<ClientDto> clients = clientService.findOldClients();
+        model.addAttribute("clients", clients);
+        return "/clients/old_clients";
     }
 
     @GetMapping("/clients/clients/newclient")
@@ -43,6 +50,7 @@ public class ClientController {
             model.addAttribute("client", clientDto);
             return "clients/create_client";
         }
+        clientDto.setActive(true);
         clientService.createClient(clientDto);
         return "redirect:/clients/clients";
     }
@@ -69,7 +77,19 @@ public class ClientController {
 
     @GetMapping("clients/clients/delete/{clientId}")
     public String deleteClient(@PathVariable("clientId") Long clientId, Model model){
-        clientService.deleteClient(clientId);
+        clientService.logicDeleteClient(clientId);
         return "redirect:/clients/clients";
+    }
+
+    @GetMapping("clients/old_clients/restore/{clientId}")
+    public String restoreClient(@PathVariable("clientId") Long clientId, Model model){
+        clientService.restoreClient(clientId);
+        return "redirect:/clients/old_clients";
+    }
+
+    @GetMapping("clients/old_clients/delete/{clientId}")
+    public String deleteOldClient(@PathVariable("clientId") Long clientId, Model model){
+        clientService.deleteClient(clientId);
+        return "redirect:/clients/old_clients";
     }
 }

@@ -52,6 +52,35 @@
                 </div>
             </div>
         </div>
+        <br/><br/>
+        <h2 class="title">Objetos alquilados</h2>
+        <table class="table is-bordered is-striped is-fullwidth">
+            <thead>
+            <tr>
+                <th style="width:5%">#</th>
+                <th style="width:35%">Objeto</th>
+                <th style="width:15%">Posición</th>
+                <th style="width:15%">Cantidad alquilada</th>
+                <th style="width:15%">Precio total</th>
+                <th style="width:15%">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "eventInventoryItem, eventInventoryItemStat : ${eventInventoryItems}">
+                <td th:text="${eventInventoryItemStat.count}">1</td>
+                <td th:text="${eventInventoryItem.inventoryItemName}">object name</td>
+                <td th:text="${eventInventoryItem.inventoryItemPosition}">object position</td>
+                <td th:text="${eventInventoryItem.amount} + ' unidades'">amount</td>
+                <td th:text="${eventInventoryItem.totalPrice} + '€'">total price</td>
+                <td>
+                    <a th:href="@{/events/events/view/delete/{eventId}/{inventoryItemId}(eventId=${event.id}, inventoryItemId=${eventInventoryItem.inventoryItemId})}"
+                       class="button is-danger is-small">
+                        Borrar
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

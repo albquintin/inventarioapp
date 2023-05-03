@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<div class="container">
+  <h1 class="title">Antiguos Objetos</h1>
+  <table class="table is-bordered is-striped is-fullwidth" id="oldItemsTable">
+    <thead>
+    <tr>
+      <th style="width:5%">Id</th>
+      <th style="width:20%">Nombre</th>
+      <th style="width:10%">Posición</th>
+      <th style="width:10%">Precio</th>
+      <th style="width:15%">Tipo</th>
+      <th style="width:20%">Subtipo</th>
+      <th style="width:20%">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "inventoryItem, inventoryItemStat : ${inventoryItems}">
+      <td th:text="${inventoryItem.id}">1</td>
+      <td th:text="${inventoryItem.name}">item name</td>
+      <td th:text="${inventoryItem.position}">item position</td>
+      <td th:text="${inventoryItem.price} + '€'">item price</td>
+      <td th:text="${inventoryItem.typeName}">item type</td>
+      <td th:text="${inventoryItem.subtypeName}">item subtype</td>
+
+      <td>
+        <a th:href="@{/items/old_inventory_items/restore/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
+           class="button is-primary is-small">
+          Restaurar
+        </a>
+        <a th:href="@{/items/old_inventory_items/delete/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
+           class="button is-danger is-small">
+          Borrar
+        </a>
+        <a th:href="@{/items/old_inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
+           class="button is-info is-small">
+          Detalles
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br/><br/>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
+<script>
+    $(document).ready(function()  {
+        $('#itemsTable').DataTable();
+    });
+    $('#oldItemsTable').DataTable({
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': [-1]
+        }]
+    });
+</script>
+</body>
+</html>

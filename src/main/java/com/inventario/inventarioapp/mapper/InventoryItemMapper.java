@@ -23,6 +23,7 @@ public class InventoryItemMapper {
                 .subtypeId(inventoryItem.getSubtype().getId())
                 .subtypeName(inventoryItem.getSubtype().getName())
                 .picture(inventoryItem.getPicture())
+                .active(inventoryItem.getActive())
                 .build();
     }
 
@@ -40,6 +41,7 @@ public class InventoryItemMapper {
                 .type(type)
                 .subtype(subtype)
                 .picture(inventoryItemDto.getPicture())
+                .active(inventoryItemDto.getActive())
                 .build();
     }
 }

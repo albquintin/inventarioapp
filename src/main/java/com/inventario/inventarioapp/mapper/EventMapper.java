@@ -16,6 +16,7 @@ public class EventMapper {
                 .clientId(event.getClient().getId())
                 .clientName(event.getClient().getName())
                 .eventDay(event.getEventDay())
+                .active(event.getActive())
                 .build();
     }
 
@@ -27,6 +28,7 @@ public class EventMapper {
                 .price(eventDto.getPrice())
                 .client(client)
                 .eventDay(eventDto.getEventDay())
+                .active(eventDto.getActive())
                 .build();
     }
 }

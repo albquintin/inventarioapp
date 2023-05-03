@@ -10,10 +10,14 @@ public class EventInventoryItemMapper {
 
     public static EventInventoryItemDto mapToEventInventoryItemDto(EventInventoryItem eventInventoryItem){
         return EventInventoryItemDto.builder()
-                .inventoryItemId(eventInventoryItem.getEvent().getId())
+                .inventoryItemId(eventInventoryItem.getInventoryItem().getId())
+                .inventoryItemName(eventInventoryItem.getInventoryItem().getName())
                 .eventId(eventInventoryItem.getEvent().getId())
                 .eventName(eventInventoryItem.getEvent().getName())
+                .inventoryItemPosition(eventInventoryItem.getInventoryItem().getPosition())
+                .eventDay(eventInventoryItem.getEvent().getEventDay())
                 .amount(eventInventoryItem.getAmount())
+                .totalPrice(eventInventoryItem.getAmount()*eventInventoryItem.getInventoryItem().getPrice())
                 .build();
     }
 

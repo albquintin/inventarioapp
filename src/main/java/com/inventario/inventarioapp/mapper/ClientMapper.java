@@ -13,6 +13,7 @@ public class ClientMapper {
                 .dni(client.getDni())
                 .phoneNumber(client.getPhoneNumber())
                 .address(client.getAddress())
+                .active(client.getActive())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class ClientMapper {
                 .dni(clientDto.getDni())
                 .phoneNumber(clientDto.getPhoneNumber())
                 .address(clientDto.getAddress())
+                .active(clientDto.getActive())
                 .build();
     }
 }

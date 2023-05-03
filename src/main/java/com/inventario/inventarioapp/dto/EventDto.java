@@ -1,10 +1,12 @@
 package com.inventario.inventarioapp.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -22,5 +24,7 @@ public class EventDto {
     private Float price;
     private Long clientId;
     private String clientName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDay;
+    private Boolean active;
 }

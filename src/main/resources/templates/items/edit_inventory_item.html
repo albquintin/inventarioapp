@@ -2,7 +2,15 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="~{fragments/header :: header}"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventario App</title>
+  <link th:href="@{/css/header.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script th:src="@{/js/cascadeDropdown.js}"></script>
+</head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
 <br /><br />
@@ -153,26 +161,5 @@
     </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script>
-  $(document).ready(function(){
-    $("#types").change(function(){
-      var typeId = $("#types").val();
-      var s = '<option value=' + -1 + '>Elija el subtipo</option>';
-      $.ajax({
-        type: 'GET',
-        url: '/loadSubtypesByType/' + typeId,
-        success: function(result){
-          var result = JSON.parse(result);
-          for (var i = 0; i < result.length; i++) {
-        	  s += '<option value="' + result[i].id + '">'+ result[i].name+ '</option>';
-        	  console.log(result);
-          }
-          $('#subtypes').html(s);
-        }
-      });
-    });
-  });
-</script>
 </body>
 </html>
