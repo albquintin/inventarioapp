@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+    <div class="card">
+        <header class="card-header" style="padding-left:37%;">
+            <p th:text="'Error al borrar el cliente \'' + ${clientName} + '\''" class="card-header-title"></p>
+        </header>
+        <div class="card-content" style="text-align:center;">
+            <div class="content">
+                No es posible borrar de manera definitiva un cliente mientras éste tenga asociados eventos. Por favor, si desea borrar el cliente, elimine antes sus eventos asociados.
+            </div>
+            <div>
+                <a th:href="@{/clients/old_clients}"
+                   class="button is-light">
+                    Clientes antiguos
+                </a>
+                <a th:href="@{/events/events}"
+                   class="button is-light">
+                    Eventos
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

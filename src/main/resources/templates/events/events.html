@@ -24,7 +24,7 @@
             <td th:text="${event.name}">event name</td>
             <td th:text="${event.price}">event price</td>
             <td th:text="${event.clientName}">event client</td>
-            <td th:text="${event.eventDay}">event date</td>
+            <td th:text="${#temporals.format(event.eventDay, 'dd MMM yyyy')}"></td>
             <td>
                 <a th:href="@{/events/events/edit/{eventId}(eventId=${event.id})}"
                         class="button is-primary is-small">

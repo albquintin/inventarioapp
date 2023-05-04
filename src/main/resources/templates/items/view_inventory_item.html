@@ -53,7 +53,7 @@
                         <div class="message-header">
                             <p>Cantidad</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.amount}"></div>
+                        <div class="message-body" th:text="${inventoryItem.amount} + ' unidades'"></div>
                     </article>
                 </div>
                 <div class="column">
@@ -65,12 +65,6 @@
                     </article>
                 </div>
             </div>
-            <article class="message is-success">
-                <div class="message-header">
-                    <p>Disponibilidad</p>
-                </div>
-                <div class="message-body" th:text="${inventoryItem.availability}"></div>
-            </article>
             <div class="columns">
                 <div class="column">
                     <article class="message is-success">
@@ -110,6 +104,29 @@
             </div>
         </div>
     </div>
+    <br/><br/>
+    <h2 th:if="${isNew} == true" class="title">Disponibilidad</h2>
+    <table th:if="${isNew} == true" class="table is-bordered is-striped is-fullwidth">
+        <thead>
+        <tr>
+            <th style="width:5%">#</th>
+            <th style="width:25%">Evento</th>
+            <th style="width:15%">Fecha</th>
+            <th style="width:30%">Cliente</th>
+            <th style="width:15%">Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "eventInventoryItem, eventInventoryItemStat : ${eventInventoryItems}">
+            <td th:text="${eventInventoryItemStat.count}"></td>
+            <td th:text="${eventInventoryItem.eventName}"></td>
+            <td th:text="${#temporals.format(eventInventoryItem.eventDay, 'dd MMM yyyy')}"></td>
+            <td th:text="${eventInventoryItem.clientName}"></td>
+            <td th:text="${eventInventoryItem.amount} + ' unidades'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/><br/><br/>
 </div>
 </body>
 </html>

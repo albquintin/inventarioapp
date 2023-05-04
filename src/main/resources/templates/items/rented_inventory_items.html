@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="~{fragments/header :: header}"></div>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<div class="container">
+  <h1 class="title">Objetos alquilados</h1>
+  <table class="table is-bordered is-striped is-fullwidth" id="rentedItemsTable">
+    <thead>
+    <tr>
+      <th style="width:5%">#</th>
+      <th style="width:25%">Objeto</th>
+      <th style="width:25%">Evento</th>
+      <th style="width:25%">Fecha</th>
+      <th style="width:20%">Cantidad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "eventInventoryItem, eventInventoryItemStat : ${eventInventoryItems}">
+      <td th:text="${eventInventoryItemStat.count}"></td>
+      <td th:text="${eventInventoryItem.inventoryItemName}"></td>
+      <td th:text="${eventInventoryItem.eventName}"></td>
+      <td th:text="${#temporals.format(eventInventoryItem.eventDay, 'dd MMM yyyy')}"></td>
+      <td th:text="${eventInventoryItem.amount} + ' unidades'"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br/><br/>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
+<script>
+    $(document).ready(function()  {
+        $('#itemsTable').DataTable();
+    });
+    $('#rentedItemsTable').DataTable({
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': [-1]
+        }]
+    });
+</script>
+</body>
+</html>

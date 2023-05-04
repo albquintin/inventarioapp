@@ -90,17 +90,17 @@ public class EventController {
     }
 
     @GetMapping("events/events/delete/{eventId}")
-    public String logicDeleteEvent(@PathVariable("eventId") Long eventId, Model model){
+    public String logicDeleteEvent(@PathVariable("eventId") Long eventId){
         eventService.logicDeleteEvent(eventId);
         return "redirect:/events/events";
     }
     @GetMapping("events/old_events/delete/{eventId}")
-    public String deleteEvent(@PathVariable("eventId") Long eventId, Model model){
+    public String deleteEvent(@PathVariable("eventId") Long eventId){
         eventService.deleteEvent(eventId);
         return "redirect:/events/old_events";
     }
     @GetMapping("events/old_events/restore/{eventId}")
-    public String restoreEvent(@PathVariable("eventId") Long eventId, Model model){
+    public String restoreEvent(@PathVariable("eventId") Long eventId){
         eventService.restoreEvent(eventId);
         return "redirect:/events/events";
     }
@@ -115,7 +115,7 @@ public class EventController {
 
     @GetMapping("events/events/view/delete/{eventId}/{inventoryItemId}")
     public String deleteInventoryItemFromEvent(@PathVariable("inventoryItemId") Long inventoryItemId,
-                                               @PathVariable("eventId") Long eventId, Model model){
+                                               @PathVariable("eventId") Long eventId){
         EventInventoryItemId eventInventoryItemId = new EventInventoryItemId(eventId, inventoryItemId);
         eventInventoryItemService.deleteEventInventoryItemById(eventInventoryItemId);
         return "redirect:/events/events/view/" + eventId;

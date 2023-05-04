@@ -20,6 +20,7 @@ public class EventInventoryItemDto {
     private Long inventoryItemId;
     private String inventoryItemName;
     private String inventoryItemPosition;
+    private String clientName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDay;
     @NotNull(message = "El número de objetos alquilados debe ser mayor que 0 y menor que el total disponible")

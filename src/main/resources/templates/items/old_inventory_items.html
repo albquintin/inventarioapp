@@ -14,9 +14,9 @@
       <th style="width:5%">Id</th>
       <th style="width:20%">Nombre</th>
       <th style="width:10%">Posición</th>
-      <th style="width:10%">Precio</th>
+      <th style="width:15%">Cantidad</th>
       <th style="width:15%">Tipo</th>
-      <th style="width:20%">Subtipo</th>
+      <th style="width:15%">Subtipo</th>
       <th style="width:20%">Acciones</th>
     </tr>
     </thead>
@@ -25,7 +25,7 @@
       <td th:text="${inventoryItem.id}">1</td>
       <td th:text="${inventoryItem.name}">item name</td>
       <td th:text="${inventoryItem.position}">item position</td>
-      <td th:text="${inventoryItem.price} + '€'">item price</td>
+      <td th:text="${inventoryItem.amount} + ' unidades'">item price</td>
       <td th:text="${inventoryItem.typeName}">item type</td>
       <td th:text="${inventoryItem.subtypeName}">item subtype</td>
 

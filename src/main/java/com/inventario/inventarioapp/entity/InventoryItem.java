@@ -30,8 +30,6 @@ public class InventoryItem {
     private String color;
     @Column(name = "size")
     private String size;
-    @Column(name = "availability", columnDefinition = "longtext")
-    private String availability;
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;

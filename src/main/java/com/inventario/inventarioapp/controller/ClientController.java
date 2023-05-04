@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Controller
@@ -76,20 +75,27 @@ public class ClientController {
     }
 
     @GetMapping("clients/clients/delete/{clientId}")
-    public String deleteClient(@PathVariable("clientId") Long clientId, Model model){
+    public String deleteClient(@PathVariable("clientId") Long clientId){
         clientService.logicDeleteClient(clientId);
         return "redirect:/clients/clients";
     }
 
     @GetMapping("clients/old_clients/restore/{clientId}")
-    public String restoreClient(@PathVariable("clientId") Long clientId, Model model){
+    public String restoreClient(@PathVariable("clientId") Long clientId){
         clientService.restoreClient(clientId);
         return "redirect:/clients/old_clients";
     }
 
     @GetMapping("clients/old_clients/delete/{clientId}")
     public String deleteOldClient(@PathVariable("clientId") Long clientId, Model model){
-        clientService.deleteClient(clientId);
-        return "redirect:/clients/old_clients";
+        try{
+            clientService.deleteClient(clientId);
+            return "redirect:/clients/old_clients";
+        }catch(Exception e){
+            ClientDto clientDto = clientService.findClientById(clientId);
+            model.addAttribute("clientName", clientDto.getName());
+            return "/errors/error_delete_client";
+        }
+
     }
 }

@@ -12,6 +12,7 @@ import com.inventario.inventarioapp.repository.InventoryItemRepository;
 import com.inventario.inventarioapp.service.EventInventoryItemService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,5 +46,23 @@ public class EventInventoryItemServiceImpl implements EventInventoryItemService 
     @Override
     public void deleteEventInventoryItemById(EventInventoryItemId eventInventoryItemId) {
         eventInventoryItemRepository.deleteById(eventInventoryItemId);
+    }
+
+    @Override
+    public List<EventInventoryItemDto> findRentedItems() {
+        List<EventInventoryItem> eventInventoryItems = eventInventoryItemRepository.findRentedItems();
+        return eventInventoryItems.stream().map(EventInventoryItemMapper::mapToEventInventoryItemDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventInventoryItemDto> findByInventoryItem(Long inventoryItemId) {
+        List<EventInventoryItem> eventInventoryItems = eventInventoryItemRepository.findByInventoryItem(inventoryItemId);
+        return eventInventoryItems.stream().map(EventInventoryItemMapper::mapToEventInventoryItemDto).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public Integer itemsRentedOneDay(Long inventoryItemId, LocalDate eventDay) {
+        return eventInventoryItemRepository.itemsRentedOneDay(inventoryItemId, eventDay);
     }
 }

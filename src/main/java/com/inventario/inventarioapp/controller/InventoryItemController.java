@@ -51,6 +51,13 @@ public class InventoryItemController {
         return "/items/old_inventory_items";
     }
 
+    @GetMapping("/items/rented_inventory_items")
+    public String rentedInventoryItems(Model model){
+        List<EventInventoryItemDto> eventInventoryItems = eventInventoryItemService.findRentedItems();
+        model.addAttribute("eventInventoryItems", eventInventoryItems);
+        return "/items/rented_inventory_items";
+    }
+
     @GetMapping("/items/inventory_items/newinventoryitem")
     public String newInventoryItemForm(Model model){
         InventoryItemDto inventoryItemDto = new InventoryItemDto();
@@ -149,6 +156,8 @@ public class InventoryItemController {
         InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
         model.addAttribute("inventoryItem", inventoryItemDto);
         model.addAttribute("isNew", true);
+        List<EventInventoryItemDto> eventInventoryItemDtos = eventInventoryItemService.findByInventoryItem(inventoryItemId);
+        model.addAttribute("eventInventoryItems", eventInventoryItemDtos);
         return "items/view_inventory_item";
     }
 
@@ -175,7 +184,11 @@ public class InventoryItemController {
                                     @Valid @ModelAttribute("eventInventoryItem") EventInventoryItemDto eventInventoryItemDto,
                                     BindingResult result, Model model){
         InventoryItemDto inventoryItem = inventoryItemService.findInventoryItemById(inventoryItemId);
-        if(result.hasErrors() || eventInventoryItemDto.getAmount() > inventoryItem.getAmount()){
+        EventDto event = eventService.findEventById(eventInventoryItemDto.getEventId());
+        Integer itemsRentedThisDay = eventInventoryItemService.itemsRentedOneDay(inventoryItemId, event.getEventDay())!=null?
+                eventInventoryItemService.itemsRentedOneDay(inventoryItemId, event.getEventDay()):0;
+
+        if(result.hasErrors() || itemsRentedThisDay + eventInventoryItemDto.getAmount() > inventoryItem.getAmount()){
             model.addAttribute("eventInventoryItem", eventInventoryItemDto);
             model.addAttribute("inventoryItem", inventoryItem);
             List<EventDto> events = eventService.findActiveEvents();

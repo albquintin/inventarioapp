@@ -34,6 +34,6 @@ public class Event {
 
     @Column(name = "active")
     private Boolean active;
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }

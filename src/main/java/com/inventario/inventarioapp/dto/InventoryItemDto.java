@@ -25,7 +25,6 @@ public class InventoryItemDto {
     private Integer amount;
     private String color;
     private String size;
-    private String availability;
     private Long typeId;
     private String typeName;
     @Min(value = 0L, message = "Debes elegir un subtipo para el objeto")

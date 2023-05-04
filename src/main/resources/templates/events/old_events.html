@@ -20,11 +20,11 @@
     </thead>
     <tbody>
     <tr th:each = "event, eventStat : ${events}">
-      <td th:text="${eventStat.count}">1</td>
-      <td th:text="${event.name}">event name</td>
-      <td th:text="${event.price}">event price</td>
-      <td th:text="${event.clientName}">event client</td>
-      <td th:text="${event.eventDay}">event date</td>
+      <td th:text="${eventStat.count}"></td>
+      <td th:text="${event.name}"></td>
+      <td th:text="${event.price}"></td>
+      <td th:text="${event.clientName}"></td>
+      <td th:text="${#temporals.format(event.eventDay, 'dd MMM yyyy')}"></td>
       <td>
         <a th:href="@{/events/old_events/restore/{eventId}(eventId=${event.id})}"
            class="button is-primary is-small">
