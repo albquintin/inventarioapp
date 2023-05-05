@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventario App</title>
+  <link th:href="@{/css/home.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<section class="hero is-fullheight eleven">
+  <div class="hero-body">
+<div class="container">
+  <div class="content is-large">
+    <h1>Inventario Eleven Planners</h1>
+    <p>Bienvenido a Inventario Eleven Planners, una aplicación para gestionar el inventario y las reservas de la empresa Eleven Planners</p>
+    <h2>Funcionalidades</h2>
+    <p>En esta aplicación, el usuario podrá:</p>
+    <ul>
+      <li>Dar de alta, editar y borrar nuevos clientes, eventos y objetos de inventario</li>
+      <li>Comprobar la disponibilidad de un objeto en una fecha en particular</li>
+      <li>Reservar uno o varios objetos para un evento en particular</li>
+      <li>Comprobar la rentabilidad de cada objeto a lo largo del tiempo</li>
+      <li>Revisar antiguos eventos, objetos y clientes</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
+</body>
+</html>

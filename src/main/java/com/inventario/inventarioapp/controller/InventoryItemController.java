@@ -2,6 +2,7 @@ package com.inventario.inventarioapp.controller;
 
 import com.inventario.inventarioapp.dto.*;
 import com.inventario.inventarioapp.entity.InventoryItem;
+import com.inventario.inventarioapp.mapper.InventoryItemMapper;
 import com.inventario.inventarioapp.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -128,7 +129,6 @@ public class InventoryItemController {
             model.addAttribute("subtypes", subtypes);
             return "items/edit_inventory_item";
         }
-
         inventoryItem.setId(inventoryItemId);
         inventoryItemService.updateInventoryItem(inventoryItem);
         return "redirect:/items/inventory_items";

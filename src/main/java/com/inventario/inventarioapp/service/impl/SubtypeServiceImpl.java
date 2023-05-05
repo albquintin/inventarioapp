@@ -1,7 +1,6 @@
 package com.inventario.inventarioapp.service.impl;
 
 import com.inventario.inventarioapp.dto.SubtypeDto;
-import com.inventario.inventarioapp.dto.TypeDto;
 import com.inventario.inventarioapp.entity.Subtype;
 import com.inventario.inventarioapp.entity.Type;
 import com.inventario.inventarioapp.mapper.SubtypeMapper;

@@ -1,7 +1,6 @@
 package com.inventario.inventarioapp.service;
 
 import com.inventario.inventarioapp.dto.TypeDto;
-import com.inventario.inventarioapp.entity.Type;
 
 import java.util.List;
 

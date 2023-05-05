@@ -2,7 +2,13 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="~{fragments/header :: header}"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventario App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css">
+</head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
 
@@ -36,7 +42,7 @@
                     </a>
                     <a th:href="@{/items/inventory_items/delete/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
                        class="button is-danger is-small">
-                        Borrar
+                        Archivar
                     </a>
                     <a th:href="@{/items/inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
                        class="button is-info is-small">

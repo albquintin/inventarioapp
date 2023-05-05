@@ -2,7 +2,6 @@ package com.inventario.inventarioapp.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.inventario.inventarioapp.dto.SubtypeDto;
 import com.inventario.inventarioapp.dto.TypeDto;
 import com.inventario.inventarioapp.service.SubtypeService;
@@ -14,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 public class SubtypeController {

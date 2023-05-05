@@ -24,6 +24,8 @@
       </header>
       <div class="card-content">
         <form role="form" method="post" th:action="@{/items/inventory_items/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}" th:object="${inventoryItem}" enctype="multipart/form-data" >
+          <input type="hidden" id="active" name="active" th:field="*{active}">
+          <input type="hidden" id="timesRented" name="timesRented" th:field="*{timesRented}">
           <div class="field">
             <label class="label">Nombre</label>
             <div class="control">

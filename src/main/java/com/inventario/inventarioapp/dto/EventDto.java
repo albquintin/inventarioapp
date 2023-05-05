@@ -1,6 +1,5 @@
 package com.inventario.inventarioapp.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

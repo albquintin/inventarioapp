@@ -2,8 +2,14 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="~{fragments/header :: header}"></div>
-<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inventario App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css">
+</head>
+<body style="background-color:#f7dece; height:100%;">
 <div th:replace="~{fragments/header :: navbar}"></div>
 <div class="container">
     <h1 class="title">Lista de tipos</h1>
@@ -16,8 +22,8 @@
         </thead>
         <tbody>
         <tr th:each = "type, typeStat : ${types}">
-            <td th:text="${typeStat.count}">1</td>
-            <td th:text="${type.name}">type name</td>
+            <td th:text="${typeStat.count}"></td>
+            <td th:text="${type.name}"></td>
         </tr>
         </tbody>
     </table>
