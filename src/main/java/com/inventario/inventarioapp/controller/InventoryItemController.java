@@ -122,6 +122,7 @@ public class InventoryItemController {
                                       BindingResult result, Model model){
 
         if(result.hasErrors()){
+            inventoryItem.setId(inventoryItemId);
             model.addAttribute("inventoryItem", inventoryItem);
             List<TypeDto> types = typeService.findAllTypes();
             model.addAttribute("types", types);

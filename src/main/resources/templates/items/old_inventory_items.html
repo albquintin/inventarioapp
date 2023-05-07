@@ -6,12 +6,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inventario App</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
-
+<br/><br/>
 <div class="container">
   <h1 class="title">Antiguos Objetos</h1>
   <table class="table is-bordered is-striped is-fullwidth" id="oldItemsTable">
@@ -21,9 +22,9 @@
       <th style="width:20%">Nombre</th>
       <th style="width:10%">Posición</th>
       <th style="width:15%">Cantidad</th>
-      <th style="width:15%">Tipo</th>
+      <th style="width:12%">Tipo</th>
       <th style="width:15%">Subtipo</th>
-      <th style="width:20%">Acciones</th>
+      <th style="width:23%">Acciones</th>
     </tr>
     </thead>
     <tbody>
@@ -37,15 +38,15 @@
 
       <td>
         <a th:href="@{/items/old_inventory_items/restore/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-           class="button is-primary is-small">
+           class="button apricot is-small">
           Restaurar
         </a>
         <a th:href="@{/items/old_inventory_items/delete/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-           class="button is-danger is-small">
+           class="button dune is-small">
           Borrar
         </a>
         <a th:href="@{/items/old_inventory_items/view/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-           class="button is-info is-small">
+           class="button copper is-small">
           Detalles
         </a>
       </td>

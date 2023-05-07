@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventario App</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<br /><br />
+<div class="container">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        Nuevo evento
+      </p>
+    </header>
+    <div class="card-content">
+      <form role="form" method="post" th:action="@{/events/payment_details}" th:object="${event}">
+        <input type="hidden" id="name" th:field="*{name}">
+        <input type="hidden" id="type" th:field="*{type}">
+        <input type="hidden" id="price" th:field="*{price}">
+        <input type="hidden" id="clientId" th:field="*{clientId}">
+        <input type="hidden" id="eventDay" th:field="*{eventDay}">
+        <div class="field">
+          <label class="label">Selecciona la cantidad de pagos</label>
+          <div class="select">
+            <select>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Primer pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="number"
+                    step=".01"
+                    placeholder="Inserte la cantidad del primer pago"
+                    id="firstPayment"
+                    name="firstPayment"
+                    th:field="*{firstPayment}"
+            >
+            <p th:if="${priceNotMatch} == true" class="help is-danger">
+              La suma de los pagos no concuerda con el precio total del evento
+            </p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Fecha del primer pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="date"
+                    id="firstPaymentDay"
+                    name="firstPaymentDay"
+                    th:field="*{firstPaymentDay}"
+            >
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Segundo pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="number"
+                    step=".01"
+                    placeholder="Inserte la cantidad del segundo pago"
+                    id="secondPayment"
+                    name="secondPayment"
+                    th:field="*{secondPayment}"
+            >
+            <p th:if="${priceNotMatch} == true" class="help is-danger">
+              La suma de los pagos no concuerda con el precio total del evento
+            </p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Fecha del segundo pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="date"
+                    id="secondPaymentDay"
+                    name="secondPaymentDay"
+                    th:field="*{secondPaymentDay}"
+            >
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Tercer pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="number"
+                    step=".01"
+                    placeholder="Inserte la cantidad del tercer pago"
+                    id="thirdPayment"
+                    name="thirdPayment"
+                    th:field="*{thirdPayment}"
+            >
+            <p th:if="${priceNotMatch} == true" class="help is-danger">
+              La suma de los pagos no concuerda con el precio total del evento
+            </p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Fecha del tercer pago</label>
+          <div class="control">
+            <input
+                    class="input"
+                    type="date"
+                    id="thirdPaymentDay"
+                    name="thirdPaymentDay"
+                    th:field="*{thirdPaymentDay}"
+            >
+          </div>
+        </div>
+        <div>
+          <button type="submit" class="button dune">Crear</button>
+          <a th:href="@{/events/events}"
+             class="button apricot">
+            Volver
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

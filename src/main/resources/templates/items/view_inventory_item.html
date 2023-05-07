@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventario App</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
+<br/><br/>
 <div class="container">
     <div class="card">
         <header class="card-header">
@@ -20,71 +22,71 @@
         <div class="card-content">
             <div class="columns">
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Posición</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.position}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.position}"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Precio</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.price} + '€'"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.price} + '€'"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Color</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.color}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.color}"></div>
                     </article>
                 </div>
             </div>
             <div class="columns">
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Tamaño</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.size}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.size}"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Cantidad</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.amount} + ' unidades'"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.amount} + ' unidades'"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Veces alquilado</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.timesRented}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.timesRented}"></div>
                     </article>
                 </div>
             </div>
             <div class="columns">
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Tipo</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.typeName}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.typeName}"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Subtipo</p>
                         </div>
-                        <div class="message-body" th:text="${inventoryItem.subtypeName}"></div>
+                        <div class="message-body apricot" th:text="${inventoryItem.subtypeName}"></div>
                     </article>
                 </div>
             </div>
@@ -95,15 +97,15 @@
             </div>
             <div>
                 <a th:if="${isNew} == true" th:href="@{/items/inventory_items/rent/{inventoryItemId}(inventoryItemId=${inventoryItem.id})}"
-                   class="button is-primary">
+                   class="button dune">
                     Alquilar
                 </a>
                 <a th:if="${isNew} == true" th:href="@{/items/inventory_items}"
-                   class="button is-light">
+                   class="button apricot">
                     Volver
                 </a>
                 <a th:if="${isNew} == null" th:href="@{/items/old_inventory_items}"
-                   class="button is-light">
+                   class="button apricot">
                     Volver
                 </a>
             </div>

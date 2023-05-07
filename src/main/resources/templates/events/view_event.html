@@ -6,10 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventario App</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
+<br/><br/>
 <div class="container">
     <div class="card">
         <header class="card-header">
@@ -20,37 +22,92 @@
         <div class="card-content">
             <div class="columns">
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Tipo de Evento</p>
                         </div>
-                        <div class="message-body" th:text="${event.type}"></div>
+                        <div class="message-body apricot" th:text="${event.type}"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Coste del evento</p>
                         </div>
-                        <div class="message-body" th:text="${event.price} + '€'"></div>
+                        <div class="message-body apricot" th:text="${event.price} + '€'"></div>
                     </article>
                 </div>
             </div>
             <div class="columns">
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Cliente</p>
                         </div>
-                        <div class="message-body" th:text="${event.clientName}"></div>
+                        <div class="message-body apricot" th:text="${event.clientName}"></div>
                     </article>
                 </div>
                 <div class="column">
-                    <article class="message is-success">
-                        <div class="message-header">
+                    <article class="message">
+                        <div class="message-header copper">
                             <p>Fecha del evento</p>
                         </div>
-                        <div class="message-body" th:text="${#temporals.format(event.eventDay, 'dd MMM yyyy')}"></div>
+                        <div class="message-body apricot" th:text="${#temporals.format(event.eventDay, 'dd MMM yyyy')}"></div>
+                    </article>
+                </div>
+            </div>
+            <hr>
+            <div class="columns">
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Primer pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${event.firstPayment} + '€'"></div>
+                    </article>
+                </div>
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Fecha del primer pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${#temporals.format(event.firstPaymentDay, 'dd MMM yyyy')}"></div>
+                    </article>
+                </div>
+            </div>
+            <div th:unless="${event.secondPayment == null}" class="columns">
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Segundo pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${event.secondPayment} + '€'"></div>
+                    </article>
+                </div>
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Fecha del segundo pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${#temporals.format(event.secondPaymentDay, 'dd MMM yyyy')}"></div>
+                    </article>
+                </div>
+            </div>
+            <div th:unless="${event.thirdPayment == null}" class="columns">
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Tercer pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${event.thirdPayment} + '€'"></div>
+                    </article>
+                </div>
+                <div class="column">
+                    <article class="message">
+                        <div class="message-header copper">
+                            <p>Fecha del tercer pago</p>
+                        </div>
+                        <div class="message-body apricot" th:text="${#temporals.format(event.thirdPaymentDay, 'dd MMM yyyy')}"></div>
                     </article>
                 </div>
             </div>
@@ -78,7 +135,7 @@
             <td th:text="${eventInventoryItem.totalPrice} + '€'">total price</td>
             <td>
                 <a th:href="@{/events/events/view/delete/{eventId}/{inventoryItemId}(eventId=${event.id}, inventoryItemId=${eventInventoryItem.inventoryItemId})}"
-                   class="button is-danger is-small">
+                   class="button dune is-small">
                     Borrar
                 </a>
             </td>

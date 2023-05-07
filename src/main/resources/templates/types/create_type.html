@@ -6,44 +6,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inventario App</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
 <br /><br />
 <div class="container">
-    <div class="row col-md-8 offset-md-2">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">
-                    Nuevo tipo
-                </p>
-            </header>
-            <div class="card-content">
-                <form role="form" method="post" th:action="@{/types/types}" th:object="${type}">
-                    <div class="field">
-                        <label class="label">Nombre</label>
-                        <div class="control">
-                            <input
-                                    class="input"
-                                    type="text"
-                                    placeholder="Inserte el tipo de objeto"
-                                    id="name"
-                                    name="name"
-                                    th:field="*{name}"
-                            >
-                            <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
-                        </div>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Nuevo tipo
+            </p>
+        </header>
+        <div class="card-content">
+            <form role="form" method="post" th:action="@{/types/types}" th:object="${type}">
+                <div class="field">
+                    <label class="label">Nombre</label>
+                    <div class="control">
+                        <input
+                                class="input"
+                                type="text"
+                                placeholder="Inserte el tipo de objeto"
+                                id="name"
+                                name="name"
+                                th:field="*{name}"
+                        >
+                        <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
                     </div>
-                    <div>
-                        <button type="submit" class="button is-link">Crear</button>
-                        <a th:href="@{/types/types}"
-                           class="button is-light">
-                            Volver
-                        </a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div>
+                    <button type="submit" class="button dune">Crear</button>
+                    <a th:href="@{/types/types}"
+                       class="button apricot">
+                        Volver
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

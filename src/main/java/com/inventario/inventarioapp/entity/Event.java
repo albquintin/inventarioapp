@@ -29,9 +29,20 @@ public class Event {
     private Client client;
     @Column(name = "event_day")
     private LocalDate eventDay;
-
     @Column(name = "active")
     private Boolean active;
+    @Column(name = "first_payment")
+    private Float firstPayment;
+    @Column(name = "second_payment")
+    private Float secondPayment;
+    @Column(name = "third_payment")
+    private Float thirdPayment;
+    @Column(name = "first_payment_day")
+    private LocalDate firstPaymentDay;
+    @Column(name = "second_payment_day")
+    private LocalDate secondPaymentDay;
+    @Column(name = "third_payment_day")
+    private LocalDate thirdPaymentDay;
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private Collection<EventInventoryItem> eventInventoryItems = new ArrayList<>();
 }

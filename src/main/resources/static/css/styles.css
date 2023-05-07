@@ -1,0 +1,26 @@
+html, body{
+    background-color:#f7dece;
+    background-size:cover;
+    background-attachment:fixed;
+    height: 130%
+}
+.apricot {
+    background-color:#f8c4a8!important;
+}
+.dune{
+    background-color:#ca6c51!important;
+}
+.copper{
+    background-color:#c0745e!important;
+}
+h1{
+    text-align:center;
+}
+.headerItem:hover{
+    background-color:#f8c4a8!important;
+    color:white!important;
+}
+.pagination-link.is-current{
+    background-color:#4c292b!important;
+    border-color:#4c292b!important;
+}

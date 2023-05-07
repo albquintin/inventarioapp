@@ -6,13 +6,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inventario App</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script th:src="@{/js/showPayments.js}"></script>
 </head>
 <body>
-<div th:replace="~{fragments/header :: navbar}"></div>
-<br /><br />
-<div class="container">
-  <div class="row col-md-8 offset-md-2">
+  <div th:replace="~{fragments/header :: navbar}"></div>
+  <br /><br />
+  <div class="container">
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">
@@ -21,76 +23,221 @@
       </header>
       <div class="card-content">
         <form role="form" method="post" th:action="@{/events/events}" th:object="${event}">
-          <div class="field">
-            <label class="label">Nombre</label>
-            <div class="control">
-              <input
-                      class="input"
-                      type="text"
-                      placeholder="Inserte el nombre del evento"
-                      id="name"
-                      name="name"
-                      th:field="*{name}"
-              >
-              <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Nombre</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="text"
+                          placeholder="Inserte el nombre del evento"
+                          id="name"
+                          name="name"
+                          th:field="*{name}"
+                  >
+                  <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Tipo</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="text"
+                          placeholder="Inserte el tipo de evento"
+                          id="type"
+                          name="type"
+                          th:field="*{type}"
+                  >
+                  <p th:if="${#fields.hasErrors('type')}" class="help is-danger" th:errors="*{type}"></p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="field">
-            <label class="label">Tipo</label>
-            <div class="control">
-              <input
-                      class="input"
-                      type="text"
-                      placeholder="Inserte el tipo de evento"
-                      id="type"
-                      name="type"
-                      th:field="*{type}"
-              >
-              <p th:if="${#fields.hasErrors('type')}" class="help is-danger" th:errors="*{type}"></p>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Precio</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="number"
+                          step=".01"
+                          placeholder="Inserte el coste del evento"
+                          id="price"
+                          name="price"
+                          th:field="*{price}"
+                  >
+                  <p th:if="${#fields.hasErrors('price')}" class="help is-danger" th:errors="*{price}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Cliente</label>
+                <div class="select">
+                  <select th:field="*{clientId}">
+                    <option th:each="client: ${clients}"
+                            th:value="${client.id}"
+                            th:text="${client.name}"
+                    ></option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="field">
-            <label class="label">Precio</label>
-            <div class="control">
-              <input
-                      class="input"
-                      type="number"
-                      step=".01"
-                      placeholder="Inserte el coste del evento"
-                      id="price"
-                      name="price"
-                      th:field="*{price}"
-              >
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Fecha del evento</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="date"
+                          id="eventDay"
+                          name="eventDay"
+                          th:field="*{eventDay}"
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Selecciona la cantidad de pagos</label>
+                <div class="select">
+                  <select id="totalPayments">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="field">
-            <label class="label">Cliente</label>
-            <div class="select">
-              <select th:field="*{clientId}">
-                <option th:each="client: ${clients}"
-                        th:value="${client.id}"
-                        th:text="${client.name}"
-                ></option>
-              </select>
+          <div class="columns">
+            <div class="column">
+              <div class="field">
+                <label class="label">Primer pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="number"
+                          step=".01"
+                          placeholder="Inserte la cantidad del primer pago"
+                          id="firstPayment"
+                          name="firstPayment"
+                          th:field="*{firstPayment}"
+                  >
+                  <p th:if="${priceNotMatch} == true" class="help is-danger">
+                    La suma de los pagos no concuerda con el precio total del evento
+                  </p>
+                  <p th:if="${#fields.hasErrors('firstPayment')}" class="help is-danger" th:errors="*{firstPayment}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Fecha del primer pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="date"
+                          id="firstPaymentDay"
+                          name="firstPaymentDay"
+                          th:field="*{firstPaymentDay}"
+                  >
+                  <p th:if="${#fields.hasErrors('firstPaymentDay')}" class="help is-danger" th:errors="*{firstPaymentDay}"></p>
+                  <p th:if="${datesNotMatch} == true" class="help is-danger">
+                    Las fechas de los pagos deben de estar en orden
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="field">
-            <label class="label">Fecha del evento</label>
-            <div class="control">
-              <input
-                      class="input"
-                      type="date"
-                      id="eventDay"
-                      name="eventDay"
-                      th:field="*{eventDay}"
-              >
+          <div class="columns" id="secondPaymentContainer" style="display:none;">
+            <div class="column">
+              <div class="field">
+                <label class="label">Segundo pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="number"
+                          step=".01"
+                          placeholder="Inserte la cantidad del segundo pago"
+                          id="secondPayment"
+                          name="secondPayment"
+                          th:field="*{secondPayment}"
+                  >
+                  <p th:if="${priceNotMatch} == true" class="help is-danger">
+                    La suma de los pagos no concuerda con el precio total del evento
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Fecha del segundo pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="date"
+                          id="secondPaymentDay"
+                          name="secondPaymentDay"
+                          th:field="*{secondPaymentDay}"
+                  >
+                  <p th:if="${datesNotMatch} == true" class="help is-danger">
+                    Las fechas de los pagos deben de estar en orden
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="columns" id="thirdPaymentContainer" style="display:none;">
+            <div class="column">
+              <div class="field">
+                <label class="label">Tercer pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="number"
+                          step=".01"
+                          placeholder="Inserte la cantidad del tercer pago"
+                          id="thirdPayment"
+                          name="thirdPayment"
+                          th:field="*{thirdPayment}"
+                  >
+                  <p th:if="${priceNotMatch} == true" class="help is-danger">
+                    La suma de los pagos no concuerda con el precio total del evento
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field">
+                <label class="label">Fecha del tercer pago</label>
+                <div class="control">
+                  <input
+                          class="input"
+                          type="date"
+                          id="thirdPaymentDay"
+                          name="thirdPaymentDay"
+                          th:field="*{thirdPaymentDay}"
+                  >
+                  <p th:if="${datesNotMatch} == true" class="help is-danger">
+                    Las fechas de los pagos deben de estar en orden
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
           <br />
           <div>
-            <button type="submit" class="button is-link">Crear</button>
+            <button type="submit" class="button dune">Crear</button>
             <a th:href="@{/events/events}"
-               class="button is-light">
+               class="button apricot">
               Volver
             </a>
           </div>
@@ -98,6 +245,5 @@
       </div>
     </div>
   </div>
-</div>
 </body>
 </html>

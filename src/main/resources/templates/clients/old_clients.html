@@ -6,11 +6,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inventario App</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bulma.min.css">
 </head>
 <body>
 <div th:replace="~{fragments/header :: navbar}"></div>
+<br/><br/>
 <div class="container">
   <h1 class="title">Antiguos Clientes</h1>
   <table class="table is-bordered is-striped is-fullwidth" id="oldClientsTable">
@@ -35,11 +37,11 @@
       <td th:text="${client.address}">client address</td>
       <td>
         <a th:href="@{/clients/old_clients/restore/{clientId}(clientId=${client.id})}"
-           class="button is-primary is-small">
+           class="button apricot is-small">
           Restaurar
         </a>
         <a th:href="@{/clients/old_clients/delete/{clientId}(clientId=${client.id})}"
-           class="button is-danger is-small">
+           class="button dune is-small">
           Borrar
         </a>
       </td>
@@ -55,7 +57,7 @@
     $(document).ready(function()  {
         $('#oldClientsTable').DataTable();
     });
-    $('#clientsTable').DataTable({
+    $('#oldClientsTable').DataTable({
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': [-1]

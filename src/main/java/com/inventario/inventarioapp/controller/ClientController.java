@@ -66,6 +66,7 @@ public class ClientController {
                                @Valid @ModelAttribute("client") ClientDto client,
                                BindingResult result, Model model){
         if(result.hasErrors()){
+            client.setId(clientId);
             model.addAttribute("client", client);
             return "clients/edit_client";
         }

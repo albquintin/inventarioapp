@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class EventController {
@@ -53,15 +55,30 @@ public class EventController {
         return "/events/create_event";
     }
     @PostMapping("events/events")
-    public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto, BindingResult result, Model model){
+    public String createEvent(@Valid @ModelAttribute("event") EventDto event,
+                              BindingResult result, Model model){
         if(result.hasErrors()){
-            model.addAttribute("event", eventDto);
+            model.addAttribute("event", event);
             List<ClientDto> clients = clientService.findActiveClients();
             model.addAttribute("clients", clients);
             return "/events/create_event";
         }
-        eventDto.setActive(true);
-        eventService.createEvent(eventDto);
+        if(!checkPaymentsMatch(event)){
+            model.addAttribute("event", event);
+            model.addAttribute("priceNotMatch", true);
+            List<ClientDto> clients = clientService.findActiveClients();
+            model.addAttribute("clients", clients);
+            return "events/create_event";
+        }
+        if(!checkDatesAreInOrder(event)){
+            model.addAttribute("event", event);
+            model.addAttribute("datesNotMatch", true);
+            List<ClientDto> clients = clientService.findActiveClients();
+            model.addAttribute("clients", clients);
+            return "events/create_event";
+        }
+        event.setActive(true);
+        eventService.createEvent(event);
         return "redirect:/events/events";
     }
 
@@ -79,7 +96,24 @@ public class EventController {
                               @Valid @ModelAttribute("event") EventDto event,
                               BindingResult result, Model model){
         if(result.hasErrors()){
+            event.setId(eventId);
             model.addAttribute("event", event);
+            List<ClientDto> clients = clientService.findActiveClients();
+            model.addAttribute("clients", clients);
+            return "events/edit_event";
+        }
+        if(!checkPaymentsMatch(event)){
+            event.setId(eventId);
+            model.addAttribute("event", event);
+            model.addAttribute("priceNotMatch", true);
+            List<ClientDto> clients = clientService.findActiveClients();
+            model.addAttribute("clients", clients);
+            return "events/edit_event";
+        }
+        if(!checkDatesAreInOrder(event)){
+            event.setId(eventId);
+            model.addAttribute("event", event);
+            model.addAttribute("datesNotMatch", true);
             List<ClientDto> clients = clientService.findActiveClients();
             model.addAttribute("clients", clients);
             return "events/edit_event";
@@ -119,5 +153,30 @@ public class EventController {
         EventInventoryItemId eventInventoryItemId = new EventInventoryItemId(eventId, inventoryItemId);
         eventInventoryItemService.deleteEventInventoryItemById(eventInventoryItemId);
         return "redirect:/events/events/view/" + eventId;
+    }
+
+    public boolean checkPaymentsMatch(EventDto event){
+        Optional<Float> secondPayment = Optional.ofNullable(event.getSecondPayment());
+        Optional<Float> thirdPayment = Optional.ofNullable(event.getThirdPayment());
+        Float paymentsSum = event.getFirstPayment() +
+                (secondPayment.isPresent()? secondPayment.get() : 0)+
+                (thirdPayment.isPresent()? thirdPayment.get() : 0);
+
+        if(event.getPrice()!=paymentsSum.floatValue())
+            return false;
+        else
+            return true;
+    }
+
+    public boolean checkDatesAreInOrder(EventDto event){
+        Optional<LocalDate> secondPaymentDate = Optional.ofNullable(event.getSecondPaymentDay());
+        Optional<LocalDate> thirdPaymentDate = Optional.ofNullable(event.getThirdPaymentDay());
+        if(thirdPaymentDate.isPresent())
+            if(thirdPaymentDate.get().isBefore(secondPaymentDate.get())||thirdPaymentDate.get().isBefore(event.getFirstPaymentDay()))
+                return false;
+        if(secondPaymentDate.isPresent())
+            if(secondPaymentDate.get().isBefore(event.getFirstPaymentDay()))
+                return false;
+        return true;
     }
 }

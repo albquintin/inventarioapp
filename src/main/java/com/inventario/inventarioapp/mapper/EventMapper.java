@@ -17,6 +17,12 @@ public class EventMapper {
                 .clientName(event.getClient().getName())
                 .eventDay(event.getEventDay())
                 .active(event.getActive())
+                .firstPayment(event.getFirstPayment())
+                .secondPayment(event.getSecondPayment())
+                .thirdPayment(event.getThirdPayment())
+                .firstPaymentDay(event.getFirstPaymentDay())
+                .secondPaymentDay(event.getSecondPaymentDay())
+                .thirdPaymentDay(event.getThirdPaymentDay())
                 .build();
     }
 
@@ -29,6 +35,12 @@ public class EventMapper {
                 .client(client)
                 .eventDay(eventDto.getEventDay())
                 .active(eventDto.getActive())
+                .firstPayment(eventDto.getFirstPayment())
+                .secondPayment(eventDto.getSecondPayment())
+                .thirdPayment(eventDto.getThirdPayment())
+                .firstPaymentDay(eventDto.getFirstPaymentDay())
+                .secondPaymentDay(eventDto.getSecondPaymentDay())
+                .thirdPaymentDay(eventDto.getThirdPaymentDay())
                 .build();
     }
 }
