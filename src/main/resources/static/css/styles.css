@@ -4,6 +4,9 @@ html, body{
     background-attachment:fixed;
     height: 130%
 }
+.champagne{
+    background-color:#f7dece!important;
+}
 .apricot {
     background-color:#f8c4a8!important;
 }

@@ -128,11 +128,11 @@
         </thead>
         <tbody>
         <tr th:each = "eventInventoryItem, eventInventoryItemStat : ${eventInventoryItems}">
-            <td th:text="${eventInventoryItemStat.count}">1</td>
-            <td th:text="${eventInventoryItem.inventoryItemName}">object name</td>
-            <td th:text="${eventInventoryItem.inventoryItemPosition}">object position</td>
-            <td th:text="${eventInventoryItem.amount} + ' unidades'">amount</td>
-            <td th:text="${eventInventoryItem.totalPrice} + '€'">total price</td>
+            <td th:text="${eventInventoryItemStat.count}"></td>
+            <td th:text="${eventInventoryItem.inventoryItemName}"></td>
+            <td th:text="${eventInventoryItem.inventoryItemPosition}"></td>
+            <td th:text="${eventInventoryItem.amount} + ' unidades'"></td>
+            <td th:text="${eventInventoryItem.totalPrice} + '€'"></td>
             <td>
                 <a th:href="@{/events/events/view/delete/{eventId}/{inventoryItemId}(eventId=${event.id}, inventoryItemId=${eventInventoryItem.inventoryItemId})}"
                    class="button dune is-small">

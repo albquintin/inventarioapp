@@ -18,8 +18,8 @@
     <table class="table is-bordered is-striped is-fullwidth" id="eventsTable">
         <thead>
         <tr>
-            <th style="width:5%">#</th>
-            <th style="width:20%">Nombre</th>
+            <th style="width:5%">Id</th>
+            <th style="width:20%">Evento</th>
             <th style="width:15%">Coste total</th>
             <th style="width:20%">Cliente</th>
             <th style="width:15%">Fecha del evento</th>
@@ -27,8 +27,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each = "event, eventStat : ${events}">
-            <td th:text="${eventStat.count}"></td>
+        <tr th:each = "event : ${events}">
+            <td th:text="${event.id}"></td>
             <td th:text="${event.name}"></td>
             <td th:text="${event.price} + '€'"></td>
             <td th:text="${event.clientName}"></td>

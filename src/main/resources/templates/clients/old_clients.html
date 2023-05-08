@@ -18,8 +18,8 @@
   <table class="table is-bordered is-striped is-fullwidth" id="oldClientsTable">
     <thead>
     <tr>
-      <th style="width:5%">#</th>
-      <th style="width:25%">Nombre</th>
+      <th style="width:5%">Id</th>
+      <th style="width:25%">Cliente</th>
       <th style="width:15%">Email</th>
       <th style="width:10%">DNI</th>
       <th style="width:10%">Móvil</th>
@@ -28,20 +28,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each = "client, clientStat : ${clients}">
-      <td th:text="${clientStat.count}">1</td>
-      <td th:text="${client.name}">client name</td>
-      <td th:text="${client.email}">client email</td>
-      <td th:text="${client.dni}">client dni</td>
-      <td th:text="${client.phoneNumber}">client phone</td>
-      <td th:text="${client.address}">client address</td>
+    <tr th:each = "client : ${clients}">
+      <td th:text="${client.id}"></td>
+      <td th:text="${client.name}"></td>
+      <td th:text="${client.email}"></td>
+      <td th:text="${client.dni}"></td>
+      <td th:text="${client.phoneNumber}"></td>
+      <td th:text="${client.address}"></td>
       <td>
         <a th:href="@{/clients/old_clients/restore/{clientId}(clientId=${client.id})}"
            class="button apricot is-small">
           Restaurar
         </a>
-        <a th:href="@{/clients/old_clients/delete/{clientId}(clientId=${client.id})}"
-           class="button dune is-small">
+        <a class="button dune is-small open-modal">
           Borrar
         </a>
       </td>
@@ -49,11 +48,39 @@
     </tbody>
   </table>
 </div>
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head dune">
+      <p class="modal-card-title">Borrar Cliente</p>
+      <button class="delete close-modal" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body champagne">
+      <p id="modal-content"></p>
+      <br/>
+      <a class="button dune delete-button">Borrar</a>
+      <button class="button close-modal apricot">Cancel</button>
+    </section>
+  </div>
+</div>
 <br/><br/>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
 <script>
+    $(".open-modal").on("click", function(){
+      var row = $(this).closest('tr');
+      var clientId = row.find("td:first-child");
+      var clientName = row.find("td:nth-child(2)");
+      var url = "/clients/old_clients/delete/" + clientId.text();
+      $("#modal-content").append("¿Desea borrar de manera definitiva el cliente \'" + clientName.text() + "\'?");
+      $(".delete-button").attr("href", url);
+      $(".modal").addClass("is-active");
+    });
+    $(".close-modal").on("click", function(){
+      $(".modal").removeClass("is-active");
+      $("#modal-content").empty();
+    });
     $(document).ready(function()  {
         $('#oldClientsTable').DataTable();
     });

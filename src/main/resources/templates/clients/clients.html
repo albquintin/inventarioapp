@@ -18,8 +18,8 @@
   <table class="table is-bordered is-striped is-fullwidth" id="clientsTable">
     <thead>
     <tr>
-      <th style="width:5%">#</th>
-      <th style="width:25%">Nombre</th>
+      <th style="width:5%">Id</th>
+      <th style="width:25%">Cliente</th>
       <th style="width:15%">Email</th>
       <th style="width:10%">DNI</th>
       <th style="width:10%">Móvil</th>
@@ -28,13 +28,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each = "client, clientStat : ${clients}">
-      <td th:text="${clientStat.count}">1</td>
-      <td th:text="${client.name}">client name</td>
-      <td th:text="${client.email}">client email</td>
-      <td th:text="${client.dni}">client dni</td>
-      <td th:text="${client.phoneNumber}">client phone</td>
-      <td th:text="${client.address}">client address</td>
+    <tr th:each = "client : ${clients}">
+      <td th:text="${client.id}"></td>
+      <td th:text="${client.name}"></td>
+      <td th:text="${client.email}"></td>
+      <td th:text="${client.dni}"></td>
+      <td th:text="${client.phoneNumber}"></td>
+      <td th:text="${client.address}"></td>
       <td>
         <a th:href="@{/clients/clients/edit/{clientId}(clientId=${client.id})}"
            class="button apricot is-small">
