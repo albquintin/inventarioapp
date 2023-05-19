@@ -65,26 +65,22 @@ public class InventoryItemController {
         model.addAttribute("inventoryItem", inventoryItemDto);
         List<TypeDto> types = typeService.findAllTypes();
         model.addAttribute("types", types);
-        List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
-        model.addAttribute("subtypes", subtypes);
         return "/items/create_inventory_item";
     }
     @PostMapping("items/inventory_items")
-    public String createInventoryItem(@Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItemDto,
+    public String createInventoryItem(@Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItem,
                                       BindingResult result, Model model,
                                       @RequestParam("file") MultipartFile picture){
-        Optional<InventoryItemDto> inventoryItem = inventoryItemService.findInventoryItemByPosition(inventoryItemDto.getPosition());
-        if(inventoryItem.isPresent()){
+        Optional<InventoryItemDto> foundInventoryItem = inventoryItemService.findInventoryItemByPosition(inventoryItem.getPosition());
+        if(foundInventoryItem.isPresent()){
             model.addAttribute("duplicatedPosition", true);
             ObjectError error = new ObjectError("position", "duplicated position");
             result.addError(error);
         }
         if(result.hasErrors()){
-            model.addAttribute("inventoryItem", inventoryItemDto);
+            model.addAttribute("inventoryItem", inventoryItem);
             List<TypeDto> types = typeService.findAllTypes();
             model.addAttribute("types", types);
-            List<SubtypeDto> subtypes = subtypeService.findAllSubtypes();
-            model.addAttribute("subtypes", subtypes);
             return "items/create_inventory_item";
         }
         if(!picture.isEmpty()){
@@ -95,14 +91,14 @@ public class InventoryItemController {
                 byte[] bytesImg = picture.getBytes();
                 Path completePath = Paths.get(absolutePath + "//" + picture.getOriginalFilename());
                 Files.write(completePath, bytesImg);
-                inventoryItemDto.setPicture(picture.getOriginalFilename());
+                inventoryItem.setPicture(picture.getOriginalFilename());
             } catch(IOException e){
                 e.printStackTrace();
             }
         }
-        inventoryItemDto.setTimesRented(0);
-        inventoryItemDto.setActive(true);
-        inventoryItemService.createInventoryItem(inventoryItemDto);
+        inventoryItem.setTimesRented(0);
+        inventoryItem.setActive(true);
+        inventoryItemService.createInventoryItem(inventoryItem);
         return "redirect:/items/inventory_items";
     }
     @GetMapping("items/inventory_items/edit/{inventoryItemId}")
@@ -119,8 +115,14 @@ public class InventoryItemController {
     @PostMapping("items/inventory_items/{inventoryItemId}")
     public String updateInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId,
                                       @Valid @ModelAttribute("inventoryItem") InventoryItemDto inventoryItem,
-                                      BindingResult result, Model model){
-
+                                      BindingResult result, Model model,
+                                      @RequestParam("file") MultipartFile picture){
+        Optional<InventoryItemDto> foundInventoryItem = inventoryItemService.findInventoryItemByPosition(inventoryItem.getPosition());
+        if(foundInventoryItem.isPresent() && foundInventoryItem.get().getId() != inventoryItemId){
+            model.addAttribute("duplicatedPosition", true);
+            ObjectError error = new ObjectError("position", "duplicated position");
+            result.addError(error);
+        }
         if(result.hasErrors()){
             inventoryItem.setId(inventoryItemId);
             model.addAttribute("inventoryItem", inventoryItem);
@@ -129,6 +131,19 @@ public class InventoryItemController {
             List<SubtypeDto> subtypes = subtypeService.findSubtypesByType(inventoryItem.getTypeId());
             model.addAttribute("subtypes", subtypes);
             return "items/edit_inventory_item";
+        }
+        if(!picture.isEmpty()){
+            Path imagesDirectory = Paths.get("src//main//resources//static/images");
+            String absolutePath = imagesDirectory.toFile().getAbsolutePath();
+
+            try{
+                byte[] bytesImg = picture.getBytes();
+                Path completePath = Paths.get(absolutePath + "//" + picture.getOriginalFilename());
+                Files.write(completePath, bytesImg);
+                inventoryItem.setPicture(picture.getOriginalFilename());
+            } catch(IOException e){
+                e.printStackTrace();
+            }
         }
         inventoryItem.setId(inventoryItemId);
         inventoryItemService.updateInventoryItem(inventoryItem);
@@ -141,7 +156,16 @@ public class InventoryItemController {
     }
 
     @GetMapping("items/old_inventory_items/restore/{inventoryItemId}")
-    public String restoreInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId){
+    public String restoreInventoryItem(@PathVariable("inventoryItemId") Long inventoryItemId, Model model){
+        InventoryItemDto inventoryItem = inventoryItemService.findInventoryItemById(inventoryItemId);
+        Optional<InventoryItemDto> foundInventoryItem = inventoryItemService.findInventoryItemByPosition(inventoryItem.getPosition());
+        if(foundInventoryItem.isPresent()){
+            List<InventoryItemDto> inventoryItems = inventoryItemService.findOldInventoryItems();
+            model.addAttribute("inventoryItems", inventoryItems);
+            model.addAttribute("duplicatedPosition", true);
+            model.addAttribute("position", inventoryItem.getPosition());
+            return "items/old_inventory_items";
+        }
         inventoryItemService.restoreInventoryItem(inventoryItemId);
         return "redirect:/items/inventory_items";
     }
@@ -189,7 +213,8 @@ public class InventoryItemController {
         Integer itemsRentedThisDay = eventInventoryItemService.itemsRentedOneDay(inventoryItemId, event.getEventDay())!=null?
                 eventInventoryItemService.itemsRentedOneDay(inventoryItemId, event.getEventDay()):0;
 
-        if(result.hasErrors() || itemsRentedThisDay + eventInventoryItemDto.getAmount() > inventoryItem.getAmount()){
+        if(result.hasErrors() || itemsRentedThisDay + eventInventoryItemDto.getAmount() > inventoryItem.getAmount()
+            || eventInventoryItemDto.getAmount() < 1){
             model.addAttribute("eventInventoryItem", eventInventoryItemDto);
             model.addAttribute("inventoryItem", inventoryItem);
             List<EventDto> events = eventService.findActiveEvents();

@@ -33,6 +33,9 @@
                                 th:field="*{name}"
                         >
                         <p th:if="${#fields.hasErrors('name')}" class="help is-danger" th:errors="*{name}"></p>
+                        <p th:if="${duplicatedType} == true" class="help is-danger">
+                            Ese tipo ya existe
+                        </p>
                     </div>
                 </div>
                 <div>

@@ -18,7 +18,7 @@ public class InventoryItem {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "position", nullable = false, unique = true)
+    @Column(name = "position", nullable = false)
     private String position;
     @Column(name = "price", nullable = false, precision=10, scale=2)
     private Float price;

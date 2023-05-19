@@ -3,10 +3,12 @@ package com.inventario.inventarioapp.controller;
 import com.inventario.inventarioapp.dto.ClientDto;
 import com.inventario.inventarioapp.dto.EventDto;
 import com.inventario.inventarioapp.dto.EventInventoryItemDto;
+import com.inventario.inventarioapp.dto.InventoryItemDto;
 import com.inventario.inventarioapp.entity.EventInventoryItemId;
 import com.inventario.inventarioapp.service.ClientService;
 import com.inventario.inventarioapp.service.EventInventoryItemService;
 import com.inventario.inventarioapp.service.EventService;
+import com.inventario.inventarioapp.service.InventoryItemService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,13 @@ public class EventController {
     public EventService eventService;
     public ClientService clientService;
     public EventInventoryItemService eventInventoryItemService;
+    public InventoryItemService inventoryItemService;
 
-    public EventController(EventService eventService, ClientService clientService, EventInventoryItemService eventInventoryItemService) {
+    public EventController(EventService eventService, ClientService clientService, EventInventoryItemService eventInventoryItemService, InventoryItemService inventoryItemService) {
         this.eventService = eventService;
         this.clientService = clientService;
         this.eventInventoryItemService = eventInventoryItemService;
+        this.inventoryItemService = inventoryItemService;
     }
 
     @GetMapping("/events/events")
@@ -152,6 +156,9 @@ public class EventController {
                                                @PathVariable("eventId") Long eventId){
         EventInventoryItemId eventInventoryItemId = new EventInventoryItemId(eventId, inventoryItemId);
         eventInventoryItemService.deleteEventInventoryItemById(eventInventoryItemId);
+        InventoryItemDto inventoryItemDto = inventoryItemService.findInventoryItemById(inventoryItemId);
+        inventoryItemDto.setTimesRented(inventoryItemDto.getTimesRented()-1);
+        inventoryItemService.updateInventoryItem(inventoryItemDto);
         return "redirect:/events/events/view/" + eventId;
     }
 

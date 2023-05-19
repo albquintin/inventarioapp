@@ -6,11 +6,13 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -38,6 +40,12 @@ public class TypeController {
 
     @PostMapping("types/types")
     public String createType(@Valid @ModelAttribute("type") TypeDto typeDto, BindingResult result, Model model){
+        Optional<TypeDto> foundType = typeService.findByName(typeDto.getName());
+        if(foundType.isPresent()){
+            model.addAttribute("duplicatedType", true);
+            ObjectError error = new ObjectError("type", "duplicated type");
+            result.addError(error);
+        }
         if(result.hasErrors()){
             model.addAttribute("type", typeDto);
             return "types/create_type";

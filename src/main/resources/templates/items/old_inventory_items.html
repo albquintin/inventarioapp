@@ -15,6 +15,10 @@
 <br/><br/>
 <div class="container">
   <h1 class="title">Antiguos Objetos</h1>
+  <article th:if="${duplicatedPosition} == true" class="message is-danger" id="dangerMessage">
+    <div class="message-body" th:text="'El objeto no se puede restaurar porque hay otro objeto activo en la posición ' + ${position}">
+    </div>
+  </article>
   <table class="table is-bordered is-striped is-fullwidth" id="oldItemsTable">
     <thead>
     <tr>
@@ -70,31 +74,8 @@
 </div>
 <br/><br/>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script th:src="@{/js/oldInventoryItems.js}"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
-<script>
-    $(".open-modal").on("click", function(){
-      var row = $(this).closest('tr');
-      var inventoryItemId = row.find("td:first-child");
-      var inventoryItemName = row.find("td:nth-child(2)");
-      var url = "/items/old_inventory_items/delete/" + inventoryItemId.text();
-      $("#modal-content").append("¿Desea borrar de manera definitiva el objeto \'" + inventoryItemName.text() + "\'?");
-      $(".delete-button").attr("href", url);
-      $(".modal").addClass("is-active");
-    });
-    $(".close-modal").on("click", function(){
-      $(".modal").removeClass("is-active");
-      $("#modal-content").empty();
-    });
-    $(document).ready(function()  {
-        $('#itemsTable').DataTable();
-    });
-    $('#oldItemsTable').DataTable({
-        'aoColumnDefs': [{
-            'bSortable': false,
-            'aTargets': [-1]
-        }]
-    });
-</script>
 </body>
 </html>

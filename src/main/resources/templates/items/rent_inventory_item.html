@@ -45,7 +45,6 @@
                                     th:field="*{amount}"
                             >
                         </div>
-                        <!--<p th:if="${wrongAmount} == true" class="help is-danger" th:errors="*{amount}"></p>-->
                         <p th:if="${wrongAmount} == true" class="help is-danger">
                             El número de objetos alquilados debe ser mayor que 0 y menor o igual que el total disponible
                         </p>

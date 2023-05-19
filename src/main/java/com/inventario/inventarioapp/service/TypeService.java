@@ -3,6 +3,7 @@ package com.inventario.inventarioapp.service;
 import com.inventario.inventarioapp.dto.TypeDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TypeService {
 
@@ -11,4 +12,5 @@ public interface TypeService {
     void createType(TypeDto typeDto);
 
     TypeDto findById(Long typeId);
+    Optional<TypeDto> findByName(String name);
 }

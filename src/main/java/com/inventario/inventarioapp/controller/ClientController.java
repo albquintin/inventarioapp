@@ -84,7 +84,7 @@ public class ClientController {
     @GetMapping("clients/old_clients/restore/{clientId}")
     public String restoreClient(@PathVariable("clientId") Long clientId){
         clientService.restoreClient(clientId);
-        return "redirect:/clients/old_clients";
+        return "redirect:/clients/clients";
     }
 
     @GetMapping("clients/old_clients/delete/{clientId}")

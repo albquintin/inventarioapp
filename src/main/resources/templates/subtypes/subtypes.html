@@ -19,15 +19,15 @@
         <thead>
         <tr>
             <th style="width:10%">#</th>
-            <th style="width:45%">Nombre</th>
             <th style="width:45%">Tipo</th>
+            <th style="width:45%">Subtipo</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each = "subtype, subtypeStat : ${subtypes}">
             <td th:text="${subtypeStat.count}"></td>
-            <td th:text="${subtype.name}"></td>
             <td th:text="${subtype.typeName}"></td>
+            <td th:text="${subtype.name}"></td>
         </tr>
         </tbody>
     </table>

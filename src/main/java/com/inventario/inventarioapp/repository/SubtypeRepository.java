@@ -10,4 +10,6 @@ public interface SubtypeRepository extends JpaRepository<Subtype, Long> {
 
     @Query("SELECT s FROM Subtype s WHERE s.type.id = :typeId")
     List<Subtype>findSubtypesByType(Long typeId);
+    @Query("SELECT s FROM Subtype s WHERE s.name = :name AND s.type.id = :typeId")
+    Subtype findByName(String name, Long typeId);
 }

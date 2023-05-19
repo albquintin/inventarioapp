@@ -10,9 +10,11 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -44,6 +46,12 @@ public class SubtypeController {
 
     @PostMapping("subtypes/subtypes")
     public String createSubtype(@Valid @ModelAttribute("subtype") SubtypeDto subtypeDto, BindingResult result, Model model){
+        Optional<SubtypeDto> foundSubtype = subtypeService.findByName(subtypeDto.getName(), subtypeDto.getTypeId());
+        if(foundSubtype.isPresent()){
+            model.addAttribute("duplicatedSubtype", true);
+            ObjectError error = new ObjectError("subtype", "duplicated subtype");
+            result.addError(error);
+        }
         if(result.hasErrors()){
             model.addAttribute("subtype", subtypeDto);
             List<TypeDto> types = typeService.findAllTypes();

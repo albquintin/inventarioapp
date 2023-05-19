@@ -39,4 +39,15 @@ public class TypeServiceImpl implements TypeService {
         TypeDto typeDto = TypeMapper.mapToTypeDto(type.get());
         return typeDto;
     }
+
+    @Override
+    public Optional<TypeDto> findByName(String name) {
+        Type type = typeRepository.findTypeByName(name);
+        if(type==null)
+            return Optional.empty();
+        else
+            return Optional.of(TypeMapper.mapToTypeDto(type));
+    }
+
+
 }
