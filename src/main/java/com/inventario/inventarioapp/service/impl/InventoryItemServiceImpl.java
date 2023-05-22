@@ -80,7 +80,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 
     @Override
     public Optional<InventoryItemDto> findInventoryItemByPosition(String position) {
-        InventoryItem inventoryItem = inventoryItemRepository.findInventoryItemByPosition(position);
+        InventoryItem inventoryItem = inventoryItemRepository.findByPosition(position);
         if(inventoryItem == null)
             return Optional.empty();
         else

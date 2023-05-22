@@ -132,6 +132,8 @@ public class InventoryItemController {
             model.addAttribute("subtypes", subtypes);
             return "items/edit_inventory_item";
         }
+        InventoryItemDto uneditedInventoryItem = inventoryItemService.findInventoryItemById(inventoryItemId);
+        Optional<String> previousPicture = Optional.ofNullable(uneditedInventoryItem.getPicture());
         if(!picture.isEmpty()){
             Path imagesDirectory = Paths.get("src//main//resources//static/images");
             String absolutePath = imagesDirectory.toFile().getAbsolutePath();
@@ -144,6 +146,8 @@ public class InventoryItemController {
             } catch(IOException e){
                 e.printStackTrace();
             }
+        }else if(picture.isEmpty() && previousPicture.isPresent()){
+            inventoryItem.setPicture(uneditedInventoryItem.getPicture());
         }
         inventoryItem.setId(inventoryItemId);
         inventoryItemService.updateInventoryItem(inventoryItem);

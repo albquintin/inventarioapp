@@ -19,7 +19,7 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
     @Query(value = "update inventory_items set times_rented = times_rented + 1 WHERE id = :inventoryItemId", nativeQuery = true)
     void increaseOneTimesRentedInventoryItem(Long inventoryItemId);
     @Query("SELECT i FROM InventoryItem i WHERE i.position = :position AND i.active = true")
-    InventoryItem findInventoryItemByPosition(String position);
+    InventoryItem findByPosition(String position);
 
     @Modifying(clearAutomatically = true)
     @Transactional
