@@ -1,8 +1,6 @@
 package com.inventario.inventarioapp.controller;
 
 import com.inventario.inventarioapp.dto.*;
-import com.inventario.inventarioapp.entity.InventoryItem;
-import com.inventario.inventarioapp.mapper.InventoryItemMapper;
 import com.inventario.inventarioapp.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

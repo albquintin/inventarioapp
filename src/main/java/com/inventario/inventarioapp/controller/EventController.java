@@ -165,6 +165,8 @@ public class EventController {
     public boolean checkPaymentsMatch(EventDto event){
         Optional<Float> secondPayment = Optional.ofNullable(event.getSecondPayment());
         Optional<Float> thirdPayment = Optional.ofNullable(event.getThirdPayment());
+        if(thirdPayment.isPresent() && secondPayment.isEmpty())
+            return false;
         Float paymentsSum = event.getFirstPayment() +
                 (secondPayment.isPresent()? secondPayment.get() : 0)+
                 (thirdPayment.isPresent()? thirdPayment.get() : 0);
@@ -178,9 +180,12 @@ public class EventController {
     public boolean checkDatesAreInOrder(EventDto event){
         Optional<LocalDate> secondPaymentDate = Optional.ofNullable(event.getSecondPaymentDay());
         Optional<LocalDate> thirdPaymentDate = Optional.ofNullable(event.getThirdPaymentDay());
-        if(thirdPaymentDate.isPresent())
+        if(thirdPaymentDate.isPresent()){
+            if(secondPaymentDate.isEmpty())
+                return false;
             if(thirdPaymentDate.get().isBefore(secondPaymentDate.get())||thirdPaymentDate.get().isBefore(event.getFirstPaymentDay()))
                 return false;
+        }
         if(secondPaymentDate.isPresent())
             if(secondPaymentDate.get().isBefore(event.getFirstPaymentDay()))
                 return false;
